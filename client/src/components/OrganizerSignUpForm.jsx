@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { OrganizerSignUpFormBackground,Button, Label, ButtonContainer, Container, Input, InputContainer } from './styles';
+import { BackgroundContainer,
+  Button,
+  Label,
+  ButtonContainer,
+  Container,
+  Input,
+  InputContainer
+ } from './styles';
 
 const OrganizerSignUpForm = () => {
   const [name, setName] = useState('');
@@ -37,7 +44,7 @@ const OrganizerSignUpForm = () => {
   };
 
   return (
-    <OrganizerSignUpFormBackground>
+    <BackgroundContainer>
       <Container>
         <InputContainer>
           <Label>Name:</Label>
@@ -64,7 +71,7 @@ const OrganizerSignUpForm = () => {
           <Button onClick={handleLogInButtonClick}>Login</Button>
         </ButtonContainer>
       </Container>
-    </OrganizerSignUpFormBackground>
+    </BackgroundContainer>
   );
 };
 

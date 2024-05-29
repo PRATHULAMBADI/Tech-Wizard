@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import axios from 'axios';
 
+
+import { BackgroundContainer } from './styles';
+
 const UserPasswordResetForm = () => {
     const [newPassword, setNewPassword] = useState('');    
     const [confirmPassword, setConfirmPassword] = useState(''); 
@@ -39,7 +42,7 @@ const UserPasswordResetForm = () => {
     };
 
     return (
-        <div>
+        <BackgroundContainer>
             <h4>Reset Password</h4>
             <form onSubmit={handleSubmit}>
                 <div>              
@@ -52,7 +55,7 @@ const UserPasswordResetForm = () => {
                 </div>
                 <button type="submit">Update</button>
             </form>
-        </div>
+        </BackgroundContainer>
     );
 };
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { BackgroundContainer } from './styles';
+
 const OrganizerDetails = () => {
   const [organizers, setOrganizers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +34,7 @@ const OrganizerDetails = () => {
   }
 
   return (
-    <div>
+    <BackgroundContainer>
       <h1>Organizer Details</h1>
       {organizers.length > 0 ? (
         <ul>
@@ -43,7 +45,7 @@ const OrganizerDetails = () => {
       ) : (
         <p>No organizers found.</p>
       )}
-    </div>
+    </BackgroundContainer>
   );
 };
 

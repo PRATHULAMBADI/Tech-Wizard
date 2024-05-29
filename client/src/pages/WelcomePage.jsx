@@ -1,8 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ImageURL from '../images/m.png';
-import { ButtonContainerHeading,WelcomePageHeading,WelcomePageImageContainer,WelcomePageImage,WelcomePageDetails,WelcomePageBackgroundContainer,ButtonContainer,Button } from './styles';
-import axios from 'axios'; 
+import WelcomePageHeading from '../components/WelcomePageHeading'
+import { WelcomePageButtonContainer,
+  WelcomePageButtonContainerHeading,
+  WelcomePageContentHeading,
+  WelcomePageImageContainer,
+  WelcomePageImage,
+  WelcomePageDetails,
+  BackgroundContainer,
+  ButtonContainer,Button } from './styles';
+// import axios from 'axios'; 
 
 
 
@@ -17,16 +25,17 @@ const WelcomePage = () => {
         navigate('/organizer-login');
       };
   return (
-    <WelcomePageBackgroundContainer>
+    <BackgroundContainer>
+      <WelcomePageHeading/>
         <WelcomePageImageContainer><WelcomePageImage src={ImageURL}/></WelcomePageImageContainer>
-        <WelcomePageHeading>"Discover Your Future: Explore, Learn, Grow"</WelcomePageHeading>
+        <WelcomePageContentHeading>"Discover Your Future: Explore, Learn, Grow"</WelcomePageContentHeading>
         <WelcomePageDetails>Welcome to " Tech Wizard: Accelerate Your Skills ", where opportunities meet ambition. Dive into a world of knowledge, innovation, and collaboration. Join us on a journey of learning, networking, and personal growth. Whether you're a tech enthusiast, an aspiring entrepreneur, or a lifelong learner, our platform is your gateway to success. Explore upcoming bootcamps, workshops, and events, connect with industry experts, and unleash your potential. Your future starts here!</WelcomePageDetails>
-        <ButtonContainer>
-          <ButtonContainerHeading>Log In as a</ButtonContainerHeading>
+        <WelcomePageButtonContainer>
+          <WelcomePageButtonContainerHeading>Log In as a</WelcomePageButtonContainerHeading>
           <Button type="submit"  onClick={handleLogInAsUser}>User</Button>
           <Button type="submit"  onClick={handleLogInAsOrganizer}>Organizer</Button>
-        </ButtonContainer>
-      </WelcomePageBackgroundContainer>
+        </WelcomePageButtonContainer>
+      </BackgroundContainer>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
-import { Link, useNavigate } from 'react-router-dom';
-import { OrganizerLoginFormBackground, ForgetPassword, NavLink, Label, Input, InputContainer, Container, Button, ButtonContainer } from './styles';
+import { useNavigate } from 'react-router-dom';
+import { BackgroundContainer, ForgetPassword, NavLink, Label, Input, InputContainer, Container, Button, ButtonContainer } from './styles';
 
 const OrganizerLoginForm = () => {
   const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ const OrganizerLoginForm = () => {
   };
 
   return (
-   <OrganizerLoginFormBackground>
+   <BackgroundContainer>
     <Container>
       <InputContainer>
         <Label htmlFor="email" className="Label">Email:</Label>
@@ -56,7 +56,7 @@ const OrganizerLoginForm = () => {
         <Button type="button" className="Button" onClick={handleSignUp}>Sign Up</Button>
       </ButtonContainer>
     </Container>
-    </OrganizerLoginFormBackground>
+    </BackgroundContainer>
   );
 };
 

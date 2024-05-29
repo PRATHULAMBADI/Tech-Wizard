@@ -13,7 +13,7 @@ const bcrypt = require('bcrypt');
 const url='mongodb+srv://iamprathul:6ccjcZTZkrch88pw@cluster0.vybziis.mongodb.net/bootcamp-workshop-database';
 const multer = require('multer');
 const path = require('path');
-const authenticateOrganizer = require('./middleware/authenticateToken');
+const authenticateToken = require('./middleware/authenticateToken');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -73,27 +73,31 @@ app.get('/user-getData', async (req, res) => {
 });
 
 app.post("/user-login", async (req, res) => {
-    try {
-      const user = await BootcampWorkshopUser.findOne({ email:req.body.email });
-      if (!user) {
-        return res
-          .status(401)
-          .json({ auth: false, message: "Invalid username/password" });
-      }
-      const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
-      if (!isPasswordValid) {
-        return res
-          .status(401)
-          .json({ auth: false, message: "Invalid username/password" });
-      }
-      res
-        .status(200)
-        .json({ auth: true, message: "Login successful"});
-    } catch (error) {npm 
-      console.error(error);
-      res.status(500).json({ message: "Internal Server Error" });
+  try {
+    const user = await BootcampWorkshopUser.findOne({ email: req.body.email });
+    if (!user) {
+      return res
+        .status(401)
+        .json({ auth: false, message: "Invalid username/password" });
     }
-  });
+    const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ auth: false, message: "Invalid username/password" });
+    }
+
+    // Generate a token
+    const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '1h' });
+
+    res
+      .status(200)
+      .json({ auth: true, token: token, message: "Login successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
 app.get('/user-logout', (req, res) => {
   res.redirect('/login');
@@ -189,9 +193,20 @@ app.post('/user-resetPassword/:token/:email', async (req, res) => {
   }
 });
 
-  //----------------------------------------------Organizers------------------------------------//
+app.use('/user-home', authenticateToken);
+app.get('/user-home', authenticateToken, async (req, res) => {
+  try {
+    console.log(req.user)
+    const programs = await BootcampWorkshopProgram.find();
+    res.json(programs);
+  } catch (error) {
+    res.status(500).send('Server Error');
+  }
+});
 
-  app.get('/organizer-getData', async (req, res) => {
+//----------------------------------------------Organizers------------------------------------//
+
+app.get('/organizer-getData', async (req, res) => {
     const organizerDetails = await BootcampWorkshopOrganizer.find();
     res.status(200).json(organizerDetails);
 });
@@ -319,10 +334,11 @@ app.post('/organizer-resetPassword/:token/:email', async (req, res) => {
   }
 });
 
-app.use('/organizer-home', authenticateOrganizer);
+app.use('/organizer-home', authenticateToken);
 
-app.get('/organizer-home', authenticateOrganizer, async (req, res) => {
+app.get('/organizer-home', authenticateToken, async (req, res) => {
   try {
+    console.log(req.organizer)
     const programs = await BootcampWorkshopProgram.find({ organizerId: req.organizer._id });
     res.json(programs);
   } catch (error) {
@@ -330,113 +346,127 @@ app.get('/organizer-home', authenticateOrganizer, async (req, res) => {
   }
 });
 
-
 //---------------------------------------------- Programs ------------------------------------//
 
-// app.post('/program-addNew', authenticateToken , upload.single('poster'), async (req, res) => {
-//   try {
-//     const { name, 
-//       conductingPerson,
-//       date, 
-//       time, 
-//       venue, 
-//       duration, 
-//       registrationLink, 
-//       website, 
-//       facebook, 
-//       instagram 
-//     } = req.body;
+app.post('/program-addNew', authenticateToken, upload.single('poster'), async (req, res) => {
+  try {
+    const {
+      name,
+      conductingPerson,
+      date,
+      time,
+      venue,
+      duration,
+      registrationLink,
+      website,
+      facebook,
+      instagram,
+    } = req.body;
 
-//     const dateTime = new Date(`${date}T${time}`);
+    const dateTime = new Date(`${date}T${time}`);
+    console.log(req.organizer._id._id)
 
-//     const existingProgram = await BootcampWorkshopProgram.findOne({
-//       name,
-//       conductingPerson,
-//       dateTime,
-//     });
-//     if (existingProgram) {
-//       return res.status(400).json({ message: "Program with the same name, conducting person, and date/time already exists" });
-//     }
-//     const posterFileName = path.basename(req.file.path);
-//     const newBootcampWorkshopProgram = new BootcampWorkshopProgram({
-//       name,
-//       posterUrl:'http://localhost:3000/'+posterFileName,
-//       conductingPerson,
-//       venue,
-//       dateTime,
-//       duration,
-//       registrationLink,
-//       website,
-//       facebook,
-//       instagram,
-//     });
+    const existingProgram = await BootcampWorkshopProgram.findOne({
+      name,
+      conductingPerson,
+      dateTime,
+    });
 
-//     await newBootcampWorkshopProgram.save();
-//     res.status(200).json({ message: "Program added successfully" });
-//   } catch (error) {
-//     console.error("Error creating program:", error.message);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
+    if (existingProgram) {
+      return res.status(400).json({ message: 'Program with the same name, conducting person, and date/time already exists' });
+    }
 
-// app.delete('/program-delete/:id', authenticateToken , async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     await BootcampWorkshopProgram.findByIdAndDelete(id);
-//     res.status(204).json({ message: 'Program deleted successfully' });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error deleting program', error });
-//   }
-// });
+    const posterFileName = path.basename(req.file.path);
+    const newBootcampWorkshopProgram = new BootcampWorkshopProgram({
+      name,
+      posterUrl: `http://localhost:3000/${posterFileName}`,
+      conductingPerson,
+      venue,
+      dateTime,
+      duration,
+      registrationLink,
+      website,
+      facebook,
+      instagram,
+      organizerId: req.organizer._id,
+    });
 
-// app.get('/program-edit/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const program = await BootcampWorkshopProgram.findById(id);
-//     if (!program) {
-//       return res.status(404).json({ message: "Program not found" });
-//     }
-//     res.status(200).json(program);
-//   } catch (error) {
-//     console.error('Error fetching program:', error);
-//     res.status(500).json({ message: 'Internal Server Error' });
-//   }
-// });
+    await newBootcampWorkshopProgram.save();
+    res.status(200).json({ message: "Program added successfully" });
+  } catch (error) {
+    console.error("Error creating program:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
+app.get('/program-edit/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const program = await BootcampWorkshopProgram.findById(id);
+    if (!program) {
+      return res.status(404).json({ message: "Program not found" });
+    }
+    res.status(200).json(program);
+  } catch (error) {
+    console.error('Error fetching program:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
-// app.post('/program-edit/:id', authenticateToken , upload.single('poster'), async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { name, conductingPerson, date, time, venue, duration, registrationLink, website, facebook, instagram } = req.body;
-//     const dateTime = new Date(`${date}T${time}`);
-//     const updateData = {
-//       name,
-//       conductingPerson,
-//       venue,
-//       dateTime,
-//       duration,
-//       registrationLink,
-//       otherLinks: { website, facebook, instagram },
-//     };
+app.post('/program-edit/:id', authenticateToken , upload.single('poster'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { 
+      name, 
+      conductingPerson, 
+      date, 
+      time, 
+      venue, 
+      duration,
+      registrationLink, 
+      website, 
+      facebook, 
+      instagram 
+    } = req.body;
 
-//     if (req.file) {
-//       const posterFileName = path.basename(req.file.path);
-//       updateData.posterUrl = 'http://localhost:3000/' + posterFileName;
-//     }
+    const dateTime = new Date(`${date}T${time}`);
+    const updateData = {
+      name,
+      conductingPerson,
+      venue,
+      dateTime,
+      duration,
+      registrationLink,
+      otherLinks: { website, facebook, instagram },
+    };
 
-//     const updatedProgram = await BootcampWorkshopProgram.findByIdAndUpdate(
-//       id, updateData, { new: true });
-//     if (!updatedProgram) {
-//       return res.status(404).json({ message: "Program not found" });
-//     }
+    if (req.file) {
+      const posterFileName = path.basename(req.file.path);
+      updateData.posterUrl = 'http://localhost:3000/' + posterFileName;
+    }
 
-//     res.status(200).json({ message: "Program updated successfully", program: updatedProgram });
-//   } catch (error) {
-//     console.error("Error updating program:", error.message);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
+    const updatedProgram = await BootcampWorkshopProgram.findByIdAndUpdate(
+      id, updateData, { new: true });
+    if (!updatedProgram) {
+      return res.status(404).json({ message: "Program not found" });
+    }
 
+    res.status(200).json({ message: "Program updated successfully", program: updatedProgram });
+  } catch (error) {
+    console.error("Error updating program:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.delete('/program-delete/:id', authenticateToken , async (req, res) => {
+  try {
+    const { id } = req.params;
+    await BootcampWorkshopProgram.findByIdAndDelete(id);
+    res.status(204).json({ message: 'Program deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting program', error });
+  }
+});
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

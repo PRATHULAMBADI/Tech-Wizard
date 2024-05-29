@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Label , Input , InputContainer ,Container, Button } from './styles';
+import { 
+    BackgroundContainer,
+    Label ,
+    Input,
+    InputContainer,
+    Container,
+    Button
+ } from './styles';
 
 const OrganizerPasswordResetRequestForm = () => {
     const [error, setError] = useState('');
@@ -33,7 +40,7 @@ const OrganizerPasswordResetRequestForm = () => {
     };
 
     return (
-        <div>
+        <BackgroundContainer>
             <h4>Forgot Password</h4>
             <Container>
                 <InputContainer>
@@ -52,7 +59,7 @@ const OrganizerPasswordResetRequestForm = () => {
             {waiting && <div>Processing request...</div>}
             {message && <div className="success">{message}</div>}
             {error && <div className="error">{error}</div>}
-        </div>
+        </BackgroundContainer>
     );
 };
 

@@ -25,6 +25,7 @@ export const Container = styled.div`
 
 //================================ WelcomePage ===============================//
 
+
 export const WelcomePageImageContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -38,7 +39,7 @@ export const WelcomePageImage = styled.img`
   border-radius:15%;
 `
 
-export const WelcomePageHeading = styled.div`
+export const WelcomePageContentHeading = styled.div`
   font-size:60px;
   text-align: center;
   padding: 0 5%;
@@ -51,15 +52,21 @@ export const WelcomePageDetails = styled.div`
   padding: 0 12% 5%;
   text-align: justify;
 `
-export const WelcomePageBackgroundContainer = styled.div`
+export const BackgroundContainer = styled.div`
   width: 100vw;
   height: fit-content;
   align-content: center;  
 `
-export const ButtonContainerHeading = styled.div`
+export const WelcomePageButtonContainer = styled.div`
+  width: 100%;
+  background-color: cyan;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+export const WelcomePageButtonContainerHeading = styled.div`
   font-weight:bold;
-  color:darkgoldenrod;
-  align-content: center;  
+  color:darkgoldenrod;  
 `
 
 //-----------------------------------------UserSignUpFormBackground---------------------------------------------------//
@@ -68,12 +75,12 @@ export const UserSignUpFormBackground =styled.div`
     width:100vw;
 `
 
-//-----------------------------------------OrganizerHomePageContainer---------------------------------------------------//
+//-----------------------------------------UserHomePageContainer/OrganizerHomePageContainer---------------------------------------------------//
 
-export const OrganizerHomePageContainer =styled.div`
+export const HomePageContainer =styled.div`
   width:100vw;
 `
-export const OrganizerHomePageUL =styled.ul`
+export const HomePageUL =styled.ul`
   list-style-type: none;
   padding: 0;
   display: flex;
@@ -81,7 +88,7 @@ export const OrganizerHomePageUL =styled.ul`
   gap: 1rem;
   justify-content: center;
 `
-export const OrganizerHomePageLI =styled.li`
+export const HomePageLI =styled.li`
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -95,22 +102,22 @@ export const OrganizerHomePageLI =styled.li`
     transform: translateY(-5px); 
   }
 `
-export const OrganizerHomePageLIHeading =styled.h3`
+export const HomePageLIHeading =styled.h3`
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
 `;
 
-export const OrganizerHomePageLIText =styled.p`
+export const HomePageLIText =styled.p`
   font-size: 1rem;
   color: #666;
 `;
 
-export const OrganizerHomePageLIImg =styled.img`
+export const HomePageLIImg =styled.img`
   width: 100%;
   
 `;
 
-export const OrganizerHomePageLIEditButton =styled.div`
+export const HomePageLIEditButton =styled.div`
   
 `;
 

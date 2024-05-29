@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
-  OrganizerHomePageLIImg,
-  OrganizerHomePageLIHeading,
-  OrganizerHomePageLIText,
+  HomePageLIImg,
+  HomePageLIHeading,
+  HomePageLIText,
   Container,
   Button,
-  OrganizerHomePageContainer,
-  OrganizerHomePageUL,
-  OrganizerHomePageLI,
-  OrganizerHomePageLIEditButton
+  HomePageContainer,
+  HomePageUL,
+  HomePageLI,
+  HomePageLIEditButton
 } from './styles';
 
 const OrganizerHomePage = () => {
@@ -21,6 +21,8 @@ const OrganizerHomePage = () => {
 
   useEffect(() => {
     fetchPrograms();
+    
+   
   }, []);
 
   const fetchPrograms = async () => {
@@ -78,21 +80,21 @@ const OrganizerHomePage = () => {
   }
 
   return (
-    <OrganizerHomePageContainer>
+    <HomePageContainer>
       <Container>
         <h1>Welcome to Organizer!</h1>
         <Button onClick={handleAddNewProgramClick}>Add New Program</Button>
         <Button onClick={handleLogout}>Logout</Button>
         <div>
           {programs.length > 0 ? (
-            <OrganizerHomePageUL>
+            <HomePageUL>
               {programs.map((program) => (
-                <OrganizerHomePageLI key={program._id}>
-                  <OrganizerHomePageLIImg src={program.posterUrl} alt={program.name} />
-                  <OrganizerHomePageLIHeading>
+                <HomePageLI key={program._id}>
+                  <HomePageLIImg src={program.posterUrl} alt={program.name} />
+                  <HomePageLIHeading>
                     {program.name}
-                  </OrganizerHomePageLIHeading>
-                  <OrganizerHomePageLIText>
+                  </HomePageLIHeading>
+                  <HomePageLIText>
                     Conducted by: {program.conductingPerson}<br />
                     Venue: {program.venue}<br />
                     Date & Time: {new Date(program.dateTime).toLocaleString()}<br />
@@ -101,20 +103,20 @@ const OrganizerHomePage = () => {
                     {program.otherLinks?.website && <a href={program.otherLinks.website}>Website</a>}<br />
                     {program.otherLinks?.facebook && <a href={program.otherLinks.facebook}>Facebook</a>}<br />
                     {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br />
-                  </OrganizerHomePageLIText>
-                  <OrganizerHomePageLIEditButton>
+                  </HomePageLIText>
+                  <HomePageLIEditButton>
                     <Button onClick={() => handleEditProgramClick(program._id)}>Edit Details</Button>
                     <Button onClick={() => handleDeleteProgram(program._id)}>Delete</Button>
-                  </OrganizerHomePageLIEditButton>
-                </OrganizerHomePageLI>
+                  </HomePageLIEditButton>
+                </HomePageLI>
               ))}
-            </OrganizerHomePageUL>
+            </HomePageUL>
           ) : (
             <p>No Upcoming Programs</p>
           )}
         </div>
       </Container>
-    </OrganizerHomePageContainer>
+    </HomePageContainer>
   );
 };
 

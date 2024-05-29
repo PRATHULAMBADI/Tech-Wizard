@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { BackgroundContainer } from './styles';
+
 const UserDetails = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,18 +34,18 @@ const UserDetails = () => {
   }
 
   return (
-    <div>
+    <BackgroundContainer>
       <h1>Users</h1>
       {users.length > 0 ? (
         <ul>
           {users.map((user) => (
-            <li key={user._id}>{user.username} - {user.email} - {user.password}</li>
+            <li key={user._id}>{user.name} - {user.email} - {user.mobile}</li>
           ))}
         </ul>
       ) : (
         <p>No users found.</p>
       )}
-    </div>
+    </BackgroundContainer>
   );
 };
 

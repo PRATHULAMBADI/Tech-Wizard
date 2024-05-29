@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { UserSignUpFormBackground,Button,Label , ButtonContainer, Container, Input, InputContainer } from './styles';
+import { 
+  BackgroundContainer,
+  Button,
+  Label,
+  ButtonContainer,
+  Container,
+  Input,
+  InputContainer 
+} from './styles';
 
 const UserSignUpForm = () => {
   const [name, setName] = useState('');
@@ -30,7 +38,7 @@ const UserSignUpForm = () => {
   };
 
   return (
-    <UserSignUpFormBackground>
+    <BackgroundContainer>
       <Container>
         <InputContainer>
         <Label>Name:</Label>
@@ -51,7 +59,7 @@ const UserSignUpForm = () => {
         <Button onClick={handleLogInButtonClick}>Login</Button>
         </ButtonContainer>
       </Container>
-    </UserSignUpFormBackground>
+    </BackgroundContainer>
   );
 };
 

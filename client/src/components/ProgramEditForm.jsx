@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  UserSignUpFormBackground,
   Button,
   Label,
   ButtonContainer,
@@ -34,8 +33,8 @@ const ProgramEditForm = () => {
           otherLinks: {
             website: program.otherLinks?.website || '',
             facebook: program.otherLinks?.facebook || '',
-            instagram: program.otherLinks?.instagram || ''
-          }
+            instagram: program.otherLinks?.instagram || '',
+          },
         });
       } catch (error) {
         console.error('Error fetching program data:', error);
@@ -61,11 +60,18 @@ const ProgramEditForm = () => {
     }
 
     try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No token found');
+      }
+
       const response = await axios.post(`http://localhost:3000/program-edit/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,
         },
       });
+
       console.log(response.data);
       alert('Program updated successfully');
       navigate('/organizer-home');
@@ -88,7 +94,7 @@ const ProgramEditForm = () => {
   };
 
   return (
-    <UserSignUpFormBackground>
+    <BackgroundContainer>
       <Container onSubmit={handleUpdateProgram} method="POST" encType="multipart/form-data">
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <InputContainer>
@@ -142,7 +148,7 @@ const ProgramEditForm = () => {
           <Button type="button" onClick={() => navigate('/organizer-home')}>Cancel</Button>
         </ButtonContainer>
       </Container>
-    </UserSignUpFormBackground>
+    </BackgroundContainer>
   );
 };
 

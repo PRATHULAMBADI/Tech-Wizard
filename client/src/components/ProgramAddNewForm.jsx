@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
-  UserSignUpFormBackground,
+  BackgroundContainer,
   Button,
   Label,
   ButtonContainer,
@@ -11,26 +11,9 @@ import {
   InputContainer,
 } from './styles';
 
-const fetchPrograms = async () => {
-  try {
-    const token = localStorage.getItem('authToken');
-    const response = await axios.get('http://localhost:3000/organizer-home', {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-    console.log('Response:', response.data);
-    setPrograms(response.data);
-    setLoading(false);
-  } catch (error) {
-    console.error('Error fetching programs:', error);
-    setError('Error fetching programs. Please try again later.');
-    setLoading(false);
-  }
-};
-
 const ProgramAddNewForm = () => {
   const [name, setName] = useState('');
+  const [organizerId, setOrganizerID] = useState('');
   const [poster, setPoster] = useState(null);
   const [conductingPerson, setConductingPerson] = useState('');
   const [venue, setVenue] = useState('');
@@ -42,11 +25,16 @@ const ProgramAddNewForm = () => {
   const [facebook, setFacebook] = useState('');
   const [instagram, setInstagram] = useState('');
   const navigate = useNavigate();
+  
   const [errorMessage, setErrorMessage] = useState('');
+
+  // const tok = localStorage.getItem('authToken');
+  // const oid = JSON.parse(atob(tok.split(".")[1])).id;
 
   const handleCreateNewProgram = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append('organizerId', organizerId);
     formData.append('name', name);
     formData.append('poster', poster);
     formData.append('conductingPerson', conductingPerson);
@@ -60,9 +48,11 @@ const ProgramAddNewForm = () => {
     formData.append('instagram', instagram);
 
     try {
+      const token = localStorage.getItem('authToken');
       const response = await axios.post('http://localhost:3000/program-addNew', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,
         },
       });
       console.log(response.data);
@@ -72,6 +62,7 @@ const ProgramAddNewForm = () => {
       console.error(err);
       setErrorMessage(err.response?.data?.message || 'An error occurred while adding the program');
     }
+    console.log('organizerId:',{organizerId})
   };
 
   const handleNotNow = () => {
@@ -79,7 +70,7 @@ const ProgramAddNewForm = () => {
   };
 
   return (
-    <UserSignUpFormBackground>
+    <BackgroundContainer>
       <Container onSubmit={handleCreateNewProgram} method="POST" encType="multipart/form-data">
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <InputContainer>
@@ -133,7 +124,7 @@ const ProgramAddNewForm = () => {
           <Button type="button" onClick={handleNotNow}>Not Now</Button>
         </ButtonContainer>
       </Container>
-    </UserSignUpFormBackground>
+    </BackgroundContainer>
   );
 };
 
