@@ -1,11 +1,12 @@
 import React from 'react';
-
-import { BackgroundContainer,WelcomePageMainHeading } from './styles';
+import icon from '../images/1.png';
+import { WelcomePageMainHeadingIcon,BackgroundContainer,WelcomePageMainHeading } from './styles';
 
 const WelcomePageHeading = () => {
   return (
     <BackgroundContainer>
-        <WelcomePageMainHeading>Tech Wizard</WelcomePageMainHeading>
+      <WelcomePageMainHeading>Tech<WelcomePageMainHeadingIcon src={ icon } alt='WelcomePageMainHeadingIcon'/>Wizard</WelcomePageMainHeading>
+      
     </BackgroundContainer>
   );
 };

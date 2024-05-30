@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
-import { BackgroundContainer } from './styles';
+import {ContainerHeading, BackgroundContainer } from './styles';
 
 const UserPasswordResetForm = () => {
     const [newPassword, setNewPassword] = useState('');    
@@ -43,7 +43,7 @@ const UserPasswordResetForm = () => {
 
     return (
         <BackgroundContainer>
-            <h4>Reset Password</h4>
+            <ContainerHeading>Reset Password</ContainerHeading>
             <form onSubmit={handleSubmit}>
                 <div>              
                   <label>Email:</label>

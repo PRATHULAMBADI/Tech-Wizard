@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {BackgroundContainer, Label , Input , InputContainer ,Container, Button } from './styles';
+import { 
+    ButtonContainer,
+    BackgroundContainer,
+    Label,
+    Input,
+    InputContainer,
+    Container,
+    Button,
+    ContainerHeading,
+    ErrorMessageContainer,
+    MessageContainer
+} from './styles';
 
 const UserPasswordResetRequestForm = () => {
     const [error, setError] = useState('');
@@ -34,8 +45,8 @@ const UserPasswordResetRequestForm = () => {
 
     return (
         <BackgroundContainer>
-            <h4>Forgot Password</h4>
             <Container>
+            <ContainerHeading>Reset Your Password</ContainerHeading>
                 <InputContainer>
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -47,12 +58,18 @@ const UserPasswordResetRequestForm = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </InputContainer>
-                <Button type="submit"  onClick={handleSubmit}>Send</Button>
+                <MessageContainer>
+                    {waiting && <div>Processing request...</div>}
+                    {message && <div className="success">{message}</div>}
+                </MessageContainer>
+                <ErrorMessageContainer>
+                    {error && <div className="error">{error}</div>}
+                </ErrorMessageContainer>
+                <ButtonContainer>
+                    <Button type="submit"  onClick={handleSubmit}>Send</Button>
+                </ButtonContainer>                
             </Container>
-            {waiting && <div>Processing request...</div>}
-            {message && <div className="success">{message}</div>}
-            {error && <div className="error">{error}</div>}
-        </BackgroundContainer>
+            </BackgroundContainer>
     );
 };
 

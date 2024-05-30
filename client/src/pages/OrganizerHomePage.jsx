@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
-  HomePageLIImg,
-  HomePageLIHeading,
-  HomePageLIText,
-  Container,
   Button,
-  HomePageContainer,
-  HomePageUL,
-  HomePageLI,
-  HomePageLIEditButton
+  ButtonContainer,
+  ExtentedButtonContainer,
+  BackgroundContainer,
+  Container,
+  ContainerHeading,
+  Tile,
+  TileContainer,
+  TileImage,
+  TileHeading,
+  TileContent,
 } from './styles';
 
 const OrganizerHomePage = () => {
@@ -80,21 +82,23 @@ const OrganizerHomePage = () => {
   }
 
   return (
-    <HomePageContainer>
+    <BackgroundContainer>
       <Container>
-        <h1>Welcome to Organizer!</h1>
-        <Button onClick={handleAddNewProgramClick}>Add New Program</Button>
-        <Button onClick={handleLogout}>Logout</Button>
+        <ContainerHeading>Welcome to Organizer!</ContainerHeading>
+        <ExtentedButtonContainer>
+          <Button onClick={handleAddNewProgramClick}>Add New Program</Button>
+          <Button onClick={handleLogout}>Logout</Button>
+        </ExtentedButtonContainer>
         <div>
           {programs.length > 0 ? (
-            <HomePageUL>
+            <TileContainer>
               {programs.map((program) => (
-                <HomePageLI key={program._id}>
-                  <HomePageLIImg src={program.posterUrl} alt={program.name} />
-                  <HomePageLIHeading>
+                <Tile key={program._id}>
+                  <TileImage src={program.posterUrl} alt={program.name} />
+                  <TileHeading>
                     {program.name}
-                  </HomePageLIHeading>
-                  <HomePageLIText>
+                  </TileHeading>
+                  <TileContent>
                     Conducted by: {program.conductingPerson}<br />
                     Venue: {program.venue}<br />
                     Date & Time: {new Date(program.dateTime).toLocaleString()}<br />
@@ -103,20 +107,20 @@ const OrganizerHomePage = () => {
                     {program.otherLinks?.website && <a href={program.otherLinks.website}>Website</a>}<br />
                     {program.otherLinks?.facebook && <a href={program.otherLinks.facebook}>Facebook</a>}<br />
                     {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br />
-                  </HomePageLIText>
-                  <HomePageLIEditButton>
+                  </TileContent>
+                  <ButtonContainer>
                     <Button onClick={() => handleEditProgramClick(program._id)}>Edit Details</Button>
                     <Button onClick={() => handleDeleteProgram(program._id)}>Delete</Button>
-                  </HomePageLIEditButton>
-                </HomePageLI>
+                  </ButtonContainer>
+                </Tile>
               ))}
-            </HomePageUL>
+            </TileContainer>
           ) : (
             <p>No Upcoming Programs</p>
           )}
         </div>
       </Container>
-    </HomePageContainer>
+    </BackgroundContainer>
   );
 };
 

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { BackgroundContainer,
+import { 
+  ContainerHeading,
+  BackgroundContainer,
   Button,
   Label,
   ButtonContainer,
@@ -30,12 +32,12 @@ const OrganizerSignUpForm = () => {
         phone,
         password,
       });
-      console.log(response.data); // Assuming your backend sends back some data upon successful registration
+      console.log(response.data);
       alert('Registration successful. Now you can log in.');
       navigate('/organizer-login');
     } catch (error) {
       console.error(error);
-      // Handle error response from backend if needed
+      setErrorMessage(err.response?.data.message || "An error occurred during signup.");
     }
   };
 
@@ -46,6 +48,7 @@ const OrganizerSignUpForm = () => {
   return (
     <BackgroundContainer>
       <Container>
+        <ContainerHeading>Organizer Sign Up</ContainerHeading>
         <InputContainer>
           <Label>Name:</Label>
           <Input type="text" value={name} onChange={(e) => setName(e.target.value)} required />

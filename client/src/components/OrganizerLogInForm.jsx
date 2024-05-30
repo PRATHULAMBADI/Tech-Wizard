@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { BackgroundContainer, ForgetPassword, NavLink, Label, Input, InputContainer, Container, Button, ButtonContainer } from './styles';
+import { ContainerHeading, BackgroundContainer, ForgetPassword, NavLink, Label, Input, InputContainer, Container, Button, ButtonContainer } from './styles';
 
 const OrganizerLoginForm = () => {
   const [email, setEmail] = useState('');
@@ -41,6 +41,7 @@ const OrganizerLoginForm = () => {
   return (
    <BackgroundContainer>
     <Container>
+      <ContainerHeading>Organizer Log In</ContainerHeading>
       <InputContainer>
         <Label htmlFor="email" className="Label">Email:</Label>
         <Input type="email" id="email" className="Input" value={email} onChange={(e) => setEmail(e.target.value)} required />

@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { BackgroundContainer, ForgetPassword, NavLink, Label, Input, InputContainer, Container, Button, ButtonContainer } from './styles';
+import { 
+  BackgroundContainer,
+  ContainerHeading, 
+  ForgetPassword, 
+  NavLink, 
+  Label, 
+  Input, 
+  InputContainer, 
+  Container, 
+  Button, 
+  ButtonContainer,
+  ErrorMessageContainer
+} from './styles';
 
 
 const UserLoginForm = () => {
@@ -40,6 +52,7 @@ const UserLoginForm = () => {
   return (
     <BackgroundContainer>
      <Container>
+     <ContainerHeading>Log In</ContainerHeading>
        <InputContainer>
          <Label htmlFor="email" className="Label">Email:</Label>
          <Input type="email" id="email" className="Input" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -48,8 +61,10 @@ const UserLoginForm = () => {
          <Label htmlFor="password" className="Label">Password:</Label>
          <Input type="password" id="password" className="Input" value={password} onChange={(e) => setPassword(e.target.value)} required />
        </InputContainer>
-       <ForgetPassword><NavLink to='/organizer-resetPasswordRequest'>Forget Password?</NavLink></ForgetPassword>
-       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+       <ForgetPassword><NavLink to='/user-resetPasswordRequest'>Forget Password?</NavLink></ForgetPassword>
+       <ErrorMessageContainer>
+        {errorMessage && {errorMessage}}
+       </ErrorMessageContainer>
        <ButtonContainer>
          <Button type="submit" className="Button" onClick={handleSubmit}>Login</Button>
          <Button type="button" className="Button" onClick={handleSignUp}>Sign Up</Button>

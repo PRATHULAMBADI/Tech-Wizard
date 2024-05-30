@@ -2,15 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
-  HomePageLIImg,
-  HomePageLIHeading,
-  HomePageLIText,
-  Container,
+  StyledHomeIcon,
+  StyledLogoutIcon,
   Button,
-  HomePageContainer,
-  HomePageUL,
-  HomePageLI,
-  HomePageLIEditButton
+  ExtentedButton,
+  ExtentedButtonContainer,
+  ButtonContainer,
+  BackgroundContainer,
+  Container,
+  ContainerHeading,
+  Tile,
+  TileContainer,
+  TileImage,
+  TileHeading,
+  TileContent,
 } from './styles';
 
 const OrganizerHomePage = () => {
@@ -50,10 +55,15 @@ const OrganizerHomePage = () => {
   const handleDashboard = () => {
     navigate('/user-getData');
   };
+  
+  const handleGoToHome = () => {
+    localStorage.removeItem('authToken');
+    navigate('/');
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
-    navigate('/');
+    navigate('/user-login');
   };
 
   const handleExcludeFromProgram = async (programId) => {
@@ -80,43 +90,48 @@ const OrganizerHomePage = () => {
   }
 
   return (
-    <HomePageContainer>
+    <BackgroundContainer>
       <Container>
-        <h1>Welcome to User!</h1>
-        <Button onClick={handleDashboard}>User Dashboard</Button>
-        <Button onClick={handleLogout}>Logout</Button>
+        <ContainerHeading>Welcome to User!</ContainerHeading>
+        <ExtentedButtonContainer>          
+          <ExtentedButton onClick={handleGoToHome}><StyledHomeIcon/></ExtentedButton>
+          <ExtentedButton onClick={handleLogout}><StyledLogoutIcon/></ExtentedButton>
+        </ExtentedButtonContainer>
+        <ButtonContainer>
+          <Button onClick={handleDashboard}>User Dashboard</Button>
+        </ButtonContainer>
         <div>
           {programs.length > 0 ? (
-            <HomePageUL>
+            <TileContainer>
               {programs.map((program) => (
-                <HomePageLI key={program._id}>
-                  <HomePageLIImg src={program.posterUrl} alt={program.name} />
-                  <HomePageLIHeading>
+                <Tile key={program._id}>
+                  <TileImage src={program.posterUrl} alt={program.name} />
+                  <TileHeading>
                     {program.name}
-                  </HomePageLIHeading>
-                  <HomePageLIText>
+                  </TileHeading>
+                  <TileContent>
                     Conducted by: {program.conductingPerson}<br />
                     Venue: {program.venue}<br />
                     Date & Time: {new Date(program.dateTime).toLocaleString()}<br />
                     Duration: {program.duration}<br />
                     <a href={program.registrationLink}>Register Here</a><br />
                     {program.otherLinks?.website && <a href={program.otherLinks.website}>Website</a>}<br />
-                    {program.otherLinks?.facebook && <a href={program.otherLinks.facebook}>Facebook</a>}<br />
-                    {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br />
-                  </HomePageLIText>
-                  <HomePageLIEditButton>
+                    {/* {program.otherLinks?.facebook && <a href={program.otherLinks.facebook}>Facebook</a>}<br />
+                    {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br /> */}
+                  </TileContent>
+                  <ButtonContainer>
                     <Button onClick={() => handleIncludeToProgram(program._id)}>Include Me</Button>
                     {/* <Button onClick={() => handleExcludeFromProgram(program._id)}>Exclude Me</Button> */}
-                  </HomePageLIEditButton>
-                </HomePageLI>
+                  </ButtonContainer>
+                </Tile>
               ))}
-            </HomePageUL>
+            </TileContainer>
           ) : (
             <p>No Upcoming Programs</p>
           )}
         </div>
       </Container>
-    </HomePageContainer>
+    </BackgroundContainer>
   );
 };
 

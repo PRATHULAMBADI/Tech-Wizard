@@ -24,6 +24,7 @@ const authenticateToken = (req, res, next) => {
     if (decoded && decoded.id) {
       req.organizer = { _id: decoded.id }; 
       req.user = { _id: decoded.id };
+      
       req.token = token;
       next();
     } else {

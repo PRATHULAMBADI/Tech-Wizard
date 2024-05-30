@@ -88,7 +88,7 @@ app.post("/user-login", async (req, res) => {
     }
 
     // Generate a token
-    const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, name:user.name }, jwtSecret, { expiresIn: '1h' });
 
     res
       .status(200)
@@ -259,9 +259,9 @@ app.post('/organizer-signup', async (req, res) => {
       
     });
     await newBootcampWorkshopOrganizer.save();
-    res.status(200).json({ message: "User registered successfully" });
+    res.status(200).json({ message: "organizer registered successfully" });
   } catch (error) {
-    console.error("Error creating user:", error.message);
+    console.error("Error creating organizer:", error.message);
     res.status(500).send("Internal Server Error");
   }
 });
