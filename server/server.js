@@ -72,32 +72,56 @@ app.get('/user-getData', async (req, res) => {
     res.status(200).json(userDetails);
 });
 
+// app.post("/user-login", async (req, res) => {
+//   try {
+//     const user = await BootcampWorkshopUser.findOne({ email: req.body.email });
+//     if (!user) {
+//       return res
+//         .status(401)
+//         .json({ auth: false, message: "Invalid username/password" });
+//     }
+//     const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+//     if (!isPasswordValid) {
+//       return res
+//         .status(401)
+//         .json({ auth: false, message: "Invalid username/password" });
+//     }
+
+//     // Generate a token
+//     const token = jwt.sign({ id: user._id, name:user.name }, jwtSecret, { expiresIn: '1h' });
+
+//     res
+//       .status(200)
+//       .json({ auth: true, token: token, message: "Login successful" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
+
+
+///////////////////////////
 app.post("/user-login", async (req, res) => {
   try {
     const user = await BootcampWorkshopUser.findOne({ email: req.body.email });
     if (!user) {
-      return res
-        .status(401)
-        .json({ auth: false, message: "Invalid username/password" });
+      return res.status(401).json({ auth: false, message: "Invalid username/password" });
     }
     const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
     if (!isPasswordValid) {
-      return res
-        .status(401)
-        .json({ auth: false, message: "Invalid username/password" });
+      return res.status(401).json({ auth: false, message: "Invalid username/password" });
     }
 
-    // Generate a token
-    const token = jwt.sign({ id: user._id, name:user.name }, jwtSecret, { expiresIn: '1h' });
-
-    res
-      .status(200)
-      .json({ auth: true, token: token, message: "Login successful" });
+    const token = jwt.sign({ id: user._id, name: user.name }, jwtSecret, { expiresIn: '1h' });
+    res.status(200).json({ auth: true, token: token, message: "Login successful" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+///////////////////////////
+
 
 app.get('/user-logout', (req, res) => {
   res.redirect('/login');
@@ -119,7 +143,7 @@ app.post('/user-signup', async (req, res) => {
       
     });
     await newBootcampWorkshopUser.save();
-    res.status(200).json({ message: "User registered successfully" });
+    res.status(200).json({ errorMessage: "User registered successfully" });
   } catch (error) {
     console.error("Error creating user:", error.message);
     res.status(500).send("Internal Server Error");

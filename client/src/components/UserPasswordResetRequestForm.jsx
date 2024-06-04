@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { 
     ButtonContainer,
@@ -20,7 +20,7 @@ const UserPasswordResetRequestForm = () => {
     const [email, setEmail] = useState('');
     const [waiting, setWaiting] =useState('');
 
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     //console.log('Error:',{error},'Message:',{message},'Email:',{email},'Waiting:',{waiting})
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,7 +32,8 @@ const UserPasswordResetRequestForm = () => {
           const { waiting, message: successMessage } = response.data;
           setMessage(successMessage);
           setWaiting(false);
-            //navigate('/login');
+          alert(successMessage)
+            navigate('/');
             
           } catch (error) {
           setWaiting(false);

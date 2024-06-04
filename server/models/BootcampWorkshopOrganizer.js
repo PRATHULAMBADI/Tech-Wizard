@@ -17,13 +17,27 @@ const bootcampWorkshopOrganizerSchema = new Schema({
     type: String,
     required: true,
   },
-  phone: {
-    type: String,
+  phone:{
+    type: Number,
     required: true,
+    minlength: 10,
+    validate: {
+      validator: function(value) {
+        return value.toString().length === 10;
+      },
+      message: 'Mobile number must be 10 digits long.'
+    }
   },
   password: {
     type: String,
     required: true,
+    minlength: 8,
+    validate: {
+      validator: function(value) {
+        return value.length >= 8;
+      },
+      message: 'Password must be at least 8 characters long.'
+    }
   },
   resetToken: {
     type: String,

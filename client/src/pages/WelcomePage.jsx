@@ -37,14 +37,15 @@ const WelcomePage = () => {
         <WelcomePageContentHeading>"Discover Your Future: Explore, Learn, Grow"</WelcomePageContentHeading>
         <WelcomePageDetails>Welcome to " Tech Wizard: Accelerate Your Skills ", where opportunities meet ambition. Dive into a world of knowledge, innovation, and collaboration. Join us on a journey of learning, networking, and personal growth. Whether you're a tech enthusiast, an aspiring entrepreneur, or a lifelong learner, our platform is your gateway to success. Explore upcoming bootcamps, workshops, and events, connect with industry experts, and unleash your potential. Your future starts here!</WelcomePageDetails>
         <ButtonContainer>
-          <Button type="submit"  onClick={handleLogInAsUser}>User</Button>
-          <StyledArrowCircleLeftOutlinedIcon/>
+          <Button type="submit" title="Login as User" onClick={handleLogInAsUser}>User</Button>
+          <StyledArrowCircleLeftOutlinedIcon tilte='hai'/>
           <ButtonContainerHeading> Discover it as a </ButtonContainerHeading>
-          <StyledArrowCircleRightOutlinedIcon/>
-          <Button type="submit"  onClick={handleLogInAsOrganizer}>Organizer</Button>
+          <StyledArrowCircleRightOutlinedIcon title='hello'/>
+          <Button type="submit" title="Login as Organizer" onClick={handleLogInAsOrganizer}>Organizer</Button>
         </ButtonContainer>
       </BackgroundContainer>
   );
 };
 
 export default WelcomePage;
+

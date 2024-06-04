@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   Button,
   ButtonContainer,
-  ExtentedButtonContainer,
   BackgroundContainer,
   Container,
   ContainerHeading,
@@ -13,6 +12,13 @@ import {
   TileImage,
   TileHeading,
   TileContent,
+  IconsHolder,
+  StyledHomeIcon,
+  StyledLogoutIcon,
+  AddIcon,
+  TileDetails,
+  TileLabel,
+  Details
 } from './styles';
 
 const OrganizerHomePage = () => {
@@ -57,6 +63,19 @@ const OrganizerHomePage = () => {
     localStorage.removeItem('authToken');
     navigate('/');
   };
+  const handleGoToHome = () => {
+    localStorage.removeItem('authToken');
+    navigate('/');
+  };
+  const handleDate = (dateTime) => {
+    const dateObject = new Date(dateTime);
+    return dateObject.toLocaleDateString();
+  }
+  
+  const handleTime = (dateTime) => {
+    const dateObject = new Date(dateTime);
+    return dateObject.toLocaleTimeString();
+  }
 
   const handleDeleteProgram = async (programId) => {
     try {
@@ -85,33 +104,42 @@ const OrganizerHomePage = () => {
     <BackgroundContainer>
       <Container>
         <ContainerHeading>Welcome to Organizer!</ContainerHeading>
-        <ExtentedButtonContainer>
-          <Button onClick={handleAddNewProgramClick}>Add New Program</Button>
-          <Button onClick={handleLogout}>Logout</Button>
-        </ExtentedButtonContainer>
+          <IconsHolder>
+            <StyledHomeIcon title="Go to Home" onClick={handleGoToHome}/>
+            <AddIcon onClick={handleAddNewProgramClick} title='Add New Program'/>
+            <StyledLogoutIcon onClick={handleLogout} title='Log Out'/>
+          </IconsHolder>
         <div>
           {programs.length > 0 ? (
             <TileContainer>
               {programs.map((program) => (
                 <Tile key={program._id}>
-                  <TileImage src={program.posterUrl} alt={program.name} />
+                   <TileImage src={program.posterUrl} alt={program.name} />
+                  <TileContent>
                   <TileHeading>
                     {program.name}
                   </TileHeading>
-                  <TileContent>
-                    Conducted by: {program.conductingPerson}<br />
-                    Venue: {program.venue}<br />
-                    Date & Time: {new Date(program.dateTime).toLocaleString()}<br />
-                    Duration: {program.duration}<br />
-                    <a href={program.registrationLink}>Register Here</a><br />
+                  <TileDetails>
+                   <TileLabel> Conducted by:</TileLabel> <Details>{program.conductingPerson}</Details>
+                  </TileDetails>
+                  <TileDetails>
+                   <TileLabel>Date:</TileLabel> <Details> {handleDate(program.dateTime)}</Details>
+                  </TileDetails>
+                  <TileDetails>
+                   <TileLabel>Time:</TileLabel> <Details> {handleTime(program.dateTime)} </Details> 
+                  </TileDetails>
+                  <TileDetails>
+                   <TileLabel>Duration:</TileLabel> <Details>   {program.duration} </Details> 
+                    {/* <a href={program.registrationLink}>Register Here</a><br />
                     {program.otherLinks?.website && <a href={program.otherLinks.website}>Website</a>}<br />
-                    {program.otherLinks?.facebook && <a href={program.otherLinks.facebook}>Facebook</a>}<br />
-                    {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br />
-                  </TileContent>
+                    {/* {program.otherLinks?.facebook && <a href={program.otherLinks.facebook}>Facebook</a>}<br />
+                    {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br /> */} 
+                  </TileDetails>
                   <ButtonContainer>
                     <Button onClick={() => handleEditProgramClick(program._id)}>Edit Details</Button>
                     <Button onClick={() => handleDeleteProgram(program._id)}>Delete</Button>
                   </ButtonContainer>
+                  </TileContent>
                 </Tile>
               ))}
             </TileContainer>

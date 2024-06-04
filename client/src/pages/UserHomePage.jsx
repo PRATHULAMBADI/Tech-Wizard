@@ -5,17 +5,20 @@ import {
   StyledHomeIcon,
   StyledLogoutIcon,
   Button,
-  ExtentedButton,
-  ExtentedButtonContainer,
+  IconsHolder,
   ButtonContainer,
   BackgroundContainer,
   Container,
   ContainerHeading,
   Tile,
+  TileLabel,
   TileContainer,
   TileImage,
   TileHeading,
   TileContent,
+  TileDetails,
+  UserRegiteredPrograms,
+  Details
 } from './styles';
 
 const OrganizerHomePage = () => {
@@ -80,6 +83,15 @@ const OrganizerHomePage = () => {
       setError('Error deleting program. Please try again later.');
     }
   };
+  const handleDate = (dateTime) => {
+    const dateObject = new Date(dateTime);
+    return dateObject.toLocaleDateString();
+  }
+  
+  const handleTime = (dateTime) => {
+    const dateObject = new Date(dateTime);
+    return dateObject.toLocaleTimeString();
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -93,36 +105,42 @@ const OrganizerHomePage = () => {
     <BackgroundContainer>
       <Container>
         <ContainerHeading>Welcome to User!</ContainerHeading>
-        <ExtentedButtonContainer>          
-          <ExtentedButton onClick={handleGoToHome}><StyledHomeIcon/></ExtentedButton>
-          <ExtentedButton onClick={handleLogout}><StyledLogoutIcon/></ExtentedButton>
-        </ExtentedButtonContainer>
-        <ButtonContainer>
-          <Button onClick={handleDashboard}>User Dashboard</Button>
-        </ButtonContainer>
+        <IconsHolder>
+          <StyledHomeIcon onClick={handleGoToHome} title="Go to Home"/>
+          <UserRegiteredPrograms onClick={handleDashboard} title="Go to Dashboard"/>
+          <StyledLogoutIcon onClick={handleLogout} title="Log Out"/>
+        </IconsHolder>
         <div>
           {programs.length > 0 ? (
             <TileContainer>
               {programs.map((program) => (
                 <Tile key={program._id}>
                   <TileImage src={program.posterUrl} alt={program.name} />
+                  <TileContent>
                   <TileHeading>
                     {program.name}
                   </TileHeading>
-                  <TileContent>
-                    Conducted by: {program.conductingPerson}<br />
-                    Venue: {program.venue}<br />
-                    Date & Time: {new Date(program.dateTime).toLocaleString()}<br />
-                    Duration: {program.duration}<br />
-                    <a href={program.registrationLink}>Register Here</a><br />
+                  <TileDetails>
+                   <TileLabel> Conducted by:</TileLabel> <Details>{program.conductingPerson}</Details>
+                  </TileDetails>
+                  <TileDetails>
+                   <TileLabel>Date:</TileLabel> <Details> {handleDate(program.dateTime)}</Details>
+                  </TileDetails>
+                  <TileDetails>
+                   <TileLabel>Time:</TileLabel> <Details> {handleTime(program.dateTime)} </Details> 
+                  </TileDetails>
+                  <TileDetails>
+                   <TileLabel>Duration:</TileLabel> <Details>   {program.duration} </Details> 
+                    {/* <a href={program.registrationLink}>Register Here</a><br />
                     {program.otherLinks?.website && <a href={program.otherLinks.website}>Website</a>}<br />
                     {/* {program.otherLinks?.facebook && <a href={program.otherLinks.facebook}>Facebook</a>}<br />
-                    {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br /> */}
-                  </TileContent>
+                    {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br /> */} 
+                  </TileDetails>
                   <ButtonContainer>
                     <Button onClick={() => handleIncludeToProgram(program._id)}>Include Me</Button>
                     {/* <Button onClick={() => handleExcludeFromProgram(program._id)}>Exclude Me</Button> */}
                   </ButtonContainer>
+                  </TileContent>
                 </Tile>
               ))}
             </TileContainer>

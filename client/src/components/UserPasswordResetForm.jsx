@@ -2,17 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import axios from 'axios';
 
-
-import {ContainerHeading, BackgroundContainer } from './styles';
+import {
+    ContainerHeading,
+    BackgroundContainer,
+    Container,
+    InputContainer,
+    Label,
+    Input,
+    ButtonContainer,
+    Button,
+    MessageContainer,
+    ErrorMessageContainer
+} from './styles';
 
 const UserPasswordResetForm = () => {
     const [newPassword, setNewPassword] = useState('');    
     const [confirmPassword, setConfirmPassword] = useState(''); 
+    const [errorMessage, setErrorMessage] = useState(''); 
+    const [message, setMessage] = useState(''); 
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
     const { resetToken, email: encodedEmail } = useParams();
-
-    console.log(resetToken, encodedEmail);
 
     useEffect(() => {
         if (encodedEmail) {
@@ -23,9 +33,14 @@ const UserPasswordResetForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (newPassword !== confirmPassword) {
+            setErrorMessage("Passwords do not match.");
+            return;
+        }
+
         try {
             const response = await axios.post(
-                `http://localhost:3000/user-resetPassword/${resetToken}/${encodeURIComponent(encodedEmail)}`,
+                `http://localhost:3000/user-resetPassword/${resetToken}/${encodeURIComponent(email)}`,
                 {
                     newPassword,
                     confirmPassword
@@ -34,27 +49,39 @@ const UserPasswordResetForm = () => {
             if (response.status === 200 && response.data) {
                 navigate('/user-login');
             } else {
-                console.error('API call failed:', response.statusText);
+                setErrorMessage('API call failed: ' + response.statusText);
             }
         } catch (error) {
-            console.error('Error resetting password:', error);
+            setErrorMessage(error.response?.data.message || "An error occurred during resetting password.");
         }
     };
 
     return (
         <BackgroundContainer>
-            <ContainerHeading>Reset Password</ContainerHeading>
-            <form onSubmit={handleSubmit}>
-                <div>              
-                  <label>Email:</label>
-                  <input type="email" value={email} disabled />
-                  <label>New Password:</label>
-                  <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
-                  <label>Confirm Password:</label>
-                  <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-                </div>
-                <button type="submit">Update</button>
-            </form>
+            <Container onSubmit={handleSubmit}>
+                <ContainerHeading>Reset Password</ContainerHeading>
+                <InputContainer>              
+                  <Label>Email:</Label>
+                  <Input type="email" value={email} disabled />
+                </InputContainer>
+                <InputContainer>
+                  <Label>New Password:</Label>
+                  <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+                </InputContainer>
+                <InputContainer>
+                  <Label>Confirm Password:</Label>
+                  <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                </InputContainer>
+                {message && (
+                    <MessageContainer>{message}</MessageContainer>
+                )}
+                {errorMessage && (
+                    <ErrorMessageContainer>{errorMessage}</ErrorMessageContainer>
+                )}
+                <ButtonContainer>
+                   <Button type="submit">Update</Button>
+                </ButtonContainer>
+            </Container>
         </BackgroundContainer>
     );
 };

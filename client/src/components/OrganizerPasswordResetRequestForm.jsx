@@ -7,7 +7,8 @@ import {
     Input,
     InputContainer,
     Container,
-    Button
+    Button,
+    ContainerHeading
  } from './styles';
 
 const OrganizerPasswordResetRequestForm = () => {
@@ -41,8 +42,8 @@ const OrganizerPasswordResetRequestForm = () => {
 
     return (
         <BackgroundContainer>
-            <h4>Forgot Password</h4>
             <Container>
+            <ContainerHeading>Reset Your Password</ContainerHeading>
                 <InputContainer>
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -54,11 +55,12 @@ const OrganizerPasswordResetRequestForm = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </InputContainer>
-                <Button type="submit"  onClick={handleSubmit}>Send</Button>
-            </Container>
+                
             {waiting && <div>Processing request...</div>}
             {message && <div className="success">{message}</div>}
             {error && <div className="error">{error}</div>}
+                <Button type="submit"  onClick={handleSubmit}>Send</Button>
+            </Container>
         </BackgroundContainer>
     );
 };

@@ -75,13 +75,18 @@ export const InputHolder =styled.div`
 export const InputContainer = styled.div`
   display:flex;
   justify-content:center;
+  align-items:center;
   padding: 2%;
   gap: 5%;
 `;
 
 export const Label =styled.label`
   font-weight:bold;
-  width:150px;
+  font-size:75%;
+  align-text:center;
+  justfy-content:center;
+  width:50%;
+  text-align:right;
 `;
 
 export const Input = styled.input`
@@ -89,7 +94,7 @@ export const Input = styled.input`
   border: 1px solid  #ccc;
   border-radius: 15px;
   font-size: 14px;
-  width: 300px;
+  width:50%;
 `;
 
 export const Container = styled.form`
@@ -109,7 +114,7 @@ export const ContainerHeading = styled.div`
   text-align:center;
   padding:3%;
   font-weight:bold;
-  font-size:50px;
+  font-size:100%;
 
 `;
 export const ErrorMessageContainer = styled.div`
@@ -143,16 +148,17 @@ export const MessageContainer = styled.div`
 //================================ WelcomePageHeading ===============================//
 
 export const WelcomePageMainHeading = styled.div`
-  font-size: 134px;
+  font-size: 50%;
   font-weight: bold;
+  text-align:center;
   color: cadetblue;
-  position absolute;
-  padding: 5% 0 0 0;
+  position center;
+  padding: 1% 0 0 0;
 `
 
 export const WelcomePageMainHeadingIcon = styled.img`
-  width:120px;
-  height:120px;
+  width:8%;
+  height:8%;
   color: cadetblue;
   position: relative;
 `

@@ -24,6 +24,24 @@ const OrganizerSignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let isValid = true;
+    if (name.trim() === '') {
+      setErrorMessage('Please enter your name.');
+      isValid = false;
+    } else if (!EMAIL_REGEX.test(email)) {
+      setErrorMessage('Please enter a valid email address.');
+      isValid = false;
+    } else if (password.length < 8) {
+      setErrorMessage('Password must be at least 8 characters long.');
+      isValid = false;
+    } else if (isNaN(mobile) || mobile.toString().length !== 10) {
+      setErrorMessage('Please enter a valid 10-digit mobile number.');
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return; // Prevent sending invalid data if validation fails
+    }
     try {
       const response = await axios.post('http://localhost:3000/organizer-signup', {
         name,
@@ -69,6 +87,9 @@ const OrganizerSignUpForm = () => {
           <Label>Password:</Label>
           <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </InputContainer>
+        {errorMessage && (
+          <ErrorMessageContainer>{errorMessage}</ErrorMessageContainer>
+        )}
         <ButtonContainer>
           <Button onClick={handleSubmit}>Sign Up</Button>
           <Button onClick={handleLogInButtonClick}>Login</Button>

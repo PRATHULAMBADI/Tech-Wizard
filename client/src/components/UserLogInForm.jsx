@@ -15,7 +15,6 @@ import {
   ErrorMessageContainer
 } from './styles';
 
-
 const UserLoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,7 +23,7 @@ const UserLoginForm = () => {
   
   const handleSubmit = async(e) => {
     e.preventDefault();
-    try{
+    try {
       const response = await axios.post("http://localhost:3000/user-login",{
         email,
         password
@@ -32,7 +31,7 @@ const UserLoginForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        });
+      });
       
       localStorage.setItem('authToken', response.data.token);
       
@@ -45,33 +44,35 @@ const UserLoginForm = () => {
     } catch (err) {
       setErrorMessage(err.response?.data.message || "An error occurred during login.");
     }
-}
+  };
+
   const handleSignUp = () => {
     navigate('/user-signup');
   };
+
   return (
     <BackgroundContainer>
-     <Container>
-     <ContainerHeading>Log In</ContainerHeading>
-       <InputContainer>
-         <Label htmlFor="email" className="Label">Email:</Label>
-         <Input type="email" id="email" className="Input" value={email} onChange={(e) => setEmail(e.target.value)} required />
-       </InputContainer>
-       <InputContainer>
-         <Label htmlFor="password" className="Label">Password:</Label>
-         <Input type="password" id="password" className="Input" value={password} onChange={(e) => setPassword(e.target.value)} required />
-       </InputContainer>
-       <ForgetPassword><NavLink to='/user-resetPasswordRequest'>Forget Password?</NavLink></ForgetPassword>
-       <ErrorMessageContainer>
-        {errorMessage && {errorMessage}}
-       </ErrorMessageContainer>
-       <ButtonContainer>
-         <Button type="submit" className="Button" onClick={handleSubmit}>Login</Button>
-         <Button type="button" className="Button" onClick={handleSignUp}>Sign Up</Button>
-       </ButtonContainer>
-     </Container>
-     </BackgroundContainer>
-   );
+      <Container>
+        <ContainerHeading>Log In</ContainerHeading>
+        <InputContainer>
+          <Label htmlFor="email" className="Label">Email:</Label>
+          <Input type="email" id="email" className="Input" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </InputContainer>
+        <InputContainer>
+          <Label htmlFor="password" className="Label">Password:</Label>
+          <Input type="password" id="password" className="Input" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </InputContainer>
+        <ForgetPassword><NavLink to='/user-resetPasswordRequest'>Forget Password?</NavLink></ForgetPassword>
+        <ErrorMessageContainer>
+          {errorMessage && <span>{errorMessage}</span>}
+        </ErrorMessageContainer>
+        <ButtonContainer>
+          <Button type="submit" className="Button" onClick={handleSubmit}>Login</Button>
+          <Button type="button" className="Button" onClick={handleSignUp}>Sign Up</Button>
+        </ButtonContainer>
+      </Container>
+    </BackgroundContainer>
+  );
 };
 
 export default UserLoginForm;
