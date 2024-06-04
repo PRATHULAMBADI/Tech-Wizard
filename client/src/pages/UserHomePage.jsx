@@ -18,13 +18,18 @@ import {
   TileContent,
   TileDetails,
   UserRegiteredPrograms,
-  Details
+  Details,
+  Search,
+  ProgramNotFound,
+  
 } from './styles';
 
 const OrganizerHomePage = () => {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -92,6 +97,17 @@ const OrganizerHomePage = () => {
     const dateObject = new Date(dateTime);
     return dateObject.toLocaleTimeString();
   }
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredPrograms = programs.filter(program =>
+    program.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    program.conductingPerson.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    handleDate(program.dateTime).includes(searchQuery) ||
+    handleTime(program.dateTime).includes(searchQuery) ||
+    program.duration.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (loading) {
     return <div>Loading...</div>;
@@ -106,14 +122,14 @@ const OrganizerHomePage = () => {
       <Container>
         <ContainerHeading>Welcome to User!</ContainerHeading>
         <IconsHolder>
-          <StyledHomeIcon onClick={handleGoToHome} title="Go to Home"/>
+          <StyledHomeIcon onClick={handleGoToHome} title="Go to Home"/>        
+          <Search type="text" placeholder="Search programs..." value={searchQuery} onChange={handleSearch}/>
           <UserRegiteredPrograms onClick={handleDashboard} title="Go to Dashboard"/>
           <StyledLogoutIcon onClick={handleLogout} title="Log Out"/>
         </IconsHolder>
-        <div>
-          {programs.length > 0 ? (
+          {filteredPrograms.length > 0 ? (
             <TileContainer>
-              {programs.map((program) => (
+              {filteredPrograms.map((program) => (
                 <Tile key={program._id}>
                   <TileImage src={program.posterUrl} alt={program.name} />
                   <TileContent>
@@ -138,16 +154,17 @@ const OrganizerHomePage = () => {
                   </TileDetails>
                   <ButtonContainer>
                     <Button onClick={() => handleIncludeToProgram(program._id)}>Include Me</Button>
-                    {/* <Button onClick={() => handleExcludeFromProgram(program._id)}>Exclude Me</Button> */}
+
                   </ButtonContainer>
                   </TileContent>
                 </Tile>
               ))}
             </TileContainer>
           ) : (
-            <p>No Upcoming Programs</p>
+            
+              <ProgramNotFound>No Upcoming Programs as per your Search</ProgramNotFound>
+            
           )}
-        </div>
       </Container>
     </BackgroundContainer>
   );

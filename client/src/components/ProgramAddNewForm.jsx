@@ -8,7 +8,8 @@ import {
   ButtonContainer,
   Container,
   Input,
-  InputContainer,
+  ProgramInputContainer,
+  ContainerHeading,
 } from './styles';
 
 const ProgramAddNewForm = () => {
@@ -72,56 +73,55 @@ const ProgramAddNewForm = () => {
   return (
     <BackgroundContainer>
       <Container onSubmit={handleCreateNewProgram} method="POST" encType="multipart/form-data">
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        <InputContainer>
+        <ContainerHeading>ADD NEW PROGRAM</ContainerHeading>
+        <ProgramInputContainer>
           <Label>Name:</Label>
           <Input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Poster:</Label>
           <Input type="file" onChange={(e) => setPoster(e.target.files[0])} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Conducting Person:</Label>
           <Input type="text" value={conductingPerson} onChange={(e) => setConductingPerson(e.target.value)} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Venue:</Label>
           <Input type="text" value={venue} onChange={(e) => setVenue(e.target.value)} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Date:</Label>
           <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Time:</Label>
           <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Duration:</Label>
           <Input type="text" value={duration} onChange={(e) => setDuration(e.target.value)} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Registration Link:</Label>
           <Input type="url" value={registrationLink} onChange={(e) => setRegistrationLink(e.target.value)} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Website:</Label>
           <Input type="url" value={website} onChange={(e) => setWebsite(e.target.value)} />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Facebook:</Label>
           <Input type="url" value={facebook} onChange={(e) => setFacebook(e.target.value)} />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Instagram:</Label>
           <Input type="url" value={instagram} onChange={(e) => setInstagram(e.target.value)} />
-        </InputContainer>
+        </ProgramInputContainer>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <ButtonContainer>
           <Button type="submit">Add Program</Button>
-        </ButtonContainer>
-        <ButtonContainer>
-          <Button type="button" onClick={handleNotNow}>Not Now</Button>
+          <Button type="button" onClick={handleNotNow}>Go Back</Button>
         </ButtonContainer>
       </Container>
     </BackgroundContainer>

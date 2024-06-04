@@ -80,12 +80,20 @@ export const InputContainer = styled.div`
   gap: 5%;
 `;
 
-export const Label =styled.label`
+export const BigLabel =styled.label`
   font-weight:bold;
   font-size:75%;
   align-text:center;
   justfy-content:center;
   width:50%;
+  text-align:right;
+`;
+export const Label =styled.label`
+  font-weight:bold;
+  font-size:75%;
+  align-text:center;
+  justfy-content:center;
+  width:30%;
   text-align:right;
 `;
 
@@ -114,7 +122,8 @@ export const ContainerHeading = styled.div`
   text-align:center;
   padding:3%;
   font-weight:bold;
-  font-size:100%;
+  font-size:150%;
+  color:darkgoldenrod;
 
 `;
 export const ErrorMessageContainer = styled.div`
@@ -237,4 +246,13 @@ export const media = {
 //     font-size: 48px;
 //   }
 // `;
+//================================Add/Edit Program===============================//
 
+export const ProgramInputContainer =styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2%;    
+  padding:0.5%;
+
+`;

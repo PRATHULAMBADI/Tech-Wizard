@@ -18,13 +18,17 @@ import {
   AddIcon,
   TileDetails,
   TileLabel,
-  Details
+  Details,
+  Search,
+  ProgramNotFound
 } from './styles';
 
 const OrganizerHomePage = () => {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -91,7 +95,18 @@ const OrganizerHomePage = () => {
       setError('Error deleting program. Please try again later.');
     }
   };
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
+  const filteredPrograms = programs.filter(program =>
+    program.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    program.conductingPerson.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    handleDate(program.dateTime).includes(searchQuery) ||
+    handleTime(program.dateTime).includes(searchQuery) ||
+    program.duration.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -106,13 +121,14 @@ const OrganizerHomePage = () => {
         <ContainerHeading>Welcome to Organizer!</ContainerHeading>
           <IconsHolder>
             <StyledHomeIcon title="Go to Home" onClick={handleGoToHome}/>
+            <Search type="text" placeholder="Search programs..." value={searchQuery} onChange={handleSearch}/>
             <AddIcon onClick={handleAddNewProgramClick} title='Add New Program'/>
             <StyledLogoutIcon onClick={handleLogout} title='Log Out'/>
           </IconsHolder>
         <div>
-          {programs.length > 0 ? (
+          {filteredPrograms.length > 0 ? (
             <TileContainer>
-              {programs.map((program) => (
+              {filteredPrograms.map((program) => (
                 <Tile key={program._id}>
                    <TileImage src={program.posterUrl} alt={program.name} />
                   <TileContent>
@@ -144,8 +160,8 @@ const OrganizerHomePage = () => {
               ))}
             </TileContainer>
           ) : (
-            <p>No Upcoming Programs</p>
-          )}
+            <ProgramNotFound>No Upcoming Programs</ProgramNotFound>
+        )}
         </div>
       </Container>
     </BackgroundContainer>

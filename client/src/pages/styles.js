@@ -12,19 +12,23 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
 // Base styles
 const baseButtonStyles = css`
-  padding: 10px 20px;
+  padding: 10px;
   background-color: transparent;
   color: gray;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
   transition: background-color 0.3s ease-in-out;
+  border-color:lightseagreen;
+  border-style:outset;
+  width:45%;
 
   &:hover {
     background-color: transparent;
     color:cadetblue;
-    border-style:outset;
-    border-color:lightseagreen;
+    border:none
+    
+    
   }
 `;
 
@@ -34,9 +38,10 @@ const tileStyles = css`
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1%;
-  width: 18%;
+  width: 14%;
   text-align: center;
   transition: transform 0.2s;
+  height:fit-content;
   
   &:hover{
     transform: translateY(-5px); 
@@ -44,6 +49,24 @@ const tileStyles = css`
 `
 
 export const Label =styled.label`
+  
+`;
+
+export const Search =styled.input`
+  padding: 1%;
+  border-radius: 5px;
+  font-size: 12%;
+  color:seagreen;
+  width:50%;
+  border:1px solid lightseagreen;
+`;
+
+export const SearchBarHolder =styled.div`
+  padding:1%;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   
 `;
 
@@ -58,7 +81,7 @@ export  const ButtonContainer = styled.div`
   justify-content: space-evenly;
   align-items: center;
   opacity:1;
-  padding:5%;
+  padding:3%;
 `;
 
 export const ButtonContainerHeading = styled.div`
@@ -66,6 +89,7 @@ export const ButtonContainerHeading = styled.div`
   font-size: 10%;  
 `
 export const Container = styled.div`
+width:100%;
   
 `
 export const ContainerHeading = styled.div`
@@ -143,6 +167,23 @@ export const AddIcon = styled(NoteAddIcon)`
   }
 `;
 
+export const ProgramNotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 98vw;
+  height: calc(100vh - 215px); 
+  font-size: 24px;
+  color: #fff;
+  text-align: center;
+  color:powderblue;
+`;
+
+
+
+
+
+
 //================================ WelcomePage ===============================//
 
 
@@ -185,6 +226,12 @@ export const BackgroundContainer = styled.div`
   position absolute;
   
 `
+export const WelcomePageButton = styled.button`
+  ${baseButtonStyles}
+  width:10%
+
+
+`
 
 
 //-----------------------------------------UserSignUpFormBackground---------------------------------------------------//
@@ -206,15 +253,14 @@ export const TileDetails =styled.div`
   justify-content: space-between;
   color: powderblue;
   width:80%;
-  font-size: 10%;
+  font-size: 8%;
   padding: 0 10%;
 `;
 
 export const TileHeading =styled.h3`
   margin:0;
   padding:0;
-
-  font-size: 15%;
+  font-size: 10%;
   margin-bottom: 0.5rem;
   color:gray;
 `;
@@ -227,7 +273,8 @@ export const TileContainer =styled.ul`
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-`
+`;
+
 export const Tile =styled.li`
   ${ tileStyles }
 `

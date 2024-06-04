@@ -7,7 +7,8 @@ import {
   ButtonContainer,
   Container,
   Input,
-  InputContainer,
+  ProgramInputContainer,
+  BackgroundContainer
 } from './styles';
 
 const ProgramEditForm = () => {
@@ -97,54 +98,52 @@ const ProgramEditForm = () => {
     <BackgroundContainer>
       <Container onSubmit={handleUpdateProgram} method="POST" encType="multipart/form-data">
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        <InputContainer>
+        <ProgramInputContainer>
           <Label>Name:</Label>
           <Input type="text" name="name" value={programData.name || ''} onChange={handleChange} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Poster:</Label>
           <Input type="file" name="poster" onChange={handleFileChange} />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Conducting Person:</Label>
           <Input type="text" name="conductingPerson" value={programData.conductingPerson || ''} onChange={handleChange} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Venue:</Label>
           <Input type="text" name="venue" value={programData.venue || ''} onChange={handleChange} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Date:</Label>
           <Input type="date" name="date" value={programData.date || ''} onChange={handleChange} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Time:</Label>
           <Input type="time" name="time" value={programData.time || ''} onChange={handleChange} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Duration:</Label>
           <Input type="text" name="duration" value={programData.duration || ''} onChange={handleChange} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Registration Link:</Label>
           <Input type="url" name="registrationLink" value={programData.registrationLink || ''} onChange={handleChange} required />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Website:</Label>
           <Input type="url" name="website" value={programData.otherLinks?.website || ''} onChange={handleChange} />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Facebook:</Label>
           <Input type="url" name="facebook" value={programData.otherLinks?.facebook || ''} onChange={handleChange} />
-        </InputContainer>
-        <InputContainer>
+        </ProgramInputContainer>
+        <ProgramInputContainer>
           <Label>Instagram:</Label>
           <Input type="url" name="instagram" value={programData.otherLinks?.instagram || ''} onChange={handleChange} />
-        </InputContainer>
+        </ProgramInputContainer>
         <ButtonContainer>
           <Button type="submit">Update Program</Button>
-        </ButtonContainer>
-        <ButtonContainer>
           <Button type="button" onClick={() => navigate('/organizer-home')}>Cancel</Button>
         </ButtonContainer>
       </Container>
