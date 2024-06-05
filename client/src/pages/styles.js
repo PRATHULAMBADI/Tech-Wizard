@@ -49,6 +49,18 @@ const tileStyles = css`
   }
 `
 
+
+const IconsHolderStyle =css`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:2%;
+  &:hover {
+    color: powderblue;
+  }
+`
+
 export const Label =styled.label`
   
 `;
@@ -58,13 +70,16 @@ export const Search =styled.input`
   border-radius: 5px;
   font-size: 12%;
   color:seagreen;
-  width:50%;
+  width:100%;
   border:1px solid lightseagreen;
+  &:hover{
+    border: 2px solid lightseagreen;; 
+  }
 `;
 
 export const SearchBarHolder =styled.div`
   padding:1%;
-  width:100%;
+  width:100px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -104,15 +119,6 @@ export const ContainerHeading = styled.div`
 
 `;
 
-
-export const IconsHolder = styled.div`
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding: 2%;
-
-`;
-
 export const StyledArrowCircleLeftOutlinedIcon = styled(ArrowCircleLeftOutlinedIcon)`
   color: cadetblue;
   font-size: 2rem;
@@ -134,6 +140,7 @@ export const StyledHomeIcon = styled(HomeIcon)`
   font-size: 40px;
   &:hover {
     color: powderblue;
+    title:"home";
   }
 `;
 
@@ -201,6 +208,7 @@ export const DisabledButton = styled.button`
 
 
 
+
 //================================ WelcomePage ===============================//
 
 
@@ -258,6 +266,51 @@ export const UserSignUpFormBackground =styled.div`
 `
 
 //-----------------------------------------UserHomePageContainer/OrganizerHomePageContainer---------------------------------------------------//
+
+export const IconsContainer = styled.div`
+  color:white;
+  // background-color:cyan;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:2% 0;
+`;
+
+export const IconsHolder = styled.div`
+  width:25%;
+//  background-color:red;
+`;
+
+export const IconLabel = styled.label`
+  color:black;
+  background-color:transparent;
+  font-size:10%;s
+  font-weight:normal;
+  &:hover {
+    color: powderblue;
+  }
+`
+
+export const IconsHolderStyledHomeIcon =styled.div`
+  ${IconsHolderStyle}
+`
+
+export const IconsHolderUserRegiteredPrograms =styled.div`
+  ${IconsHolderStyle}
+`
+
+export const IconsHolderStyledLogoutIcon =styled.div`
+  ${IconsHolderStyle}
+`
+
+export const IconsHolderSearch =styled.div`
+  ${IconsHolderStyle}
+`
+
+export const IconsHolderBackToUserHome =styled.div`
+  ${IconsHolderStyle}
+`
 
 
 export const TileContent =styled.div`

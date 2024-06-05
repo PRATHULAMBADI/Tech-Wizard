@@ -21,7 +21,13 @@ import {
   Details,
   Search,
   ProgramNotFound,
-  DisabledButton
+  DisabledButton,
+  IconsContainer,
+  IconLabel,
+  IconsHolderStyledHomeIcon,
+  IconsHolderUserRegiteredPrograms,
+  IconsHolderStyledLogoutIcon,
+  IconsHolderSearch
 } from './styles';
 
 const UserHomePage = () => {
@@ -136,12 +142,20 @@ const UserHomePage = () => {
     <BackgroundContainer>
       <Container>
         <ContainerHeading>Welcome to User!</ContainerHeading>
-        <IconsHolder>
-          <StyledHomeIcon onClick={handleGoToHome} title="Go to Home"/>
-          <Search type="text" placeholder="Search programs..." value={searchQuery} onChange={handleSearch}/>
-          <UserRegiteredPrograms onClick={handleDashboard} title="Go to Dashboard"/>
-          <StyledLogoutIcon onClick={handleLogout} title="Log Out"/>
-        </IconsHolder>
+        <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+          <IconsHolder>
+            <IconsHolderSearch><Search type="text" placeholder="Search programs..." value={searchQuery} onChange={handleSearch}/></IconsHolderSearch>
+          </IconsHolder>
+          <IconsHolder>
+            <IconsHolderUserRegiteredPrograms onClick={handleDashboard}><UserRegiteredPrograms title="Go to Dashboard"/><IconLabel >Registered Programs</IconLabel> </IconsHolderUserRegiteredPrograms>
+          </IconsHolder>
+          <IconsHolder>
+            <IconsHolderStyledLogoutIcon onClick={handleLogout}><StyledLogoutIcon  title="Log Out"/><IconLabel >Log Out</IconLabel> </IconsHolderStyledLogoutIcon>
+          </IconsHolder>
+        </IconsContainer>
         {filteredPrograms.length > 0 ? (
           <TileContainer>
             {filteredPrograms.map((program) => (

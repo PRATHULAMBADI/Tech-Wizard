@@ -20,7 +20,13 @@ import {
     BackToUserHome,
     Details,
     Search,
-    ProgramNotFound,    
+    ProgramNotFound,
+    IconsContainer ,    
+    IconLabel,
+    IconsHolderStyledHomeIcon,
+    IconsHolderStyledLogoutIcon,
+    IconsHolderBackToUserHome,
+    IconsHolderSearch
   } from './styles';
 
 const UserDashboard = () => {
@@ -94,7 +100,6 @@ const UserDashboard = () => {
   const handleBackToUserHome = () => {
     navigate('/user-home');
   };
-  
 
   const handleDate = (dateTime) => {
     const dateObject = new Date(dateTime);
@@ -109,6 +114,14 @@ const UserDashboard = () => {
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
+
+  
+  const isProgramActive = (dateTime) => {
+    const now = new Date();
+    const programDate = new Date(dateTime);
+    return now >= programDate;
+  }
+
 
   const filteredPrograms = registeredPrograms.filter(program =>
     program.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -130,12 +143,20 @@ const UserDashboard = () => {
     <BackgroundContainer>
         <Container>
             <ContainerHeading>Registered Programs</ContainerHeading>
+            <IconsContainer>
                 <IconsHolder>
-                <StyledHomeIcon onClick={handleGoToHome} title="Go to Home"/>        
-                <Search type="text" placeholder="Search programs..." value={searchQuery} onChange={handleSearch}/>
-                <BackToUserHome onClick={handleBackToUserHome} title='Back To User Home'></BackToUserHome>
-                <StyledLogoutIcon onClick={handleLogout} title="Log Out"/>
+                  <IconsHolderStyledHomeIcon onClick={handleGoToHome}><StyledHomeIcon title="Go to Home"/> <IconLabel>HOME</IconLabel> </IconsHolderStyledHomeIcon>
                 </IconsHolder>
+                <IconsHolder>      
+                 <IconsHolderSearch><Search type="text" placeholder="Search programs..." value={searchQuery} onChange={handleSearch}/></IconsHolderSearch>
+                </IconsHolder>
+                <IconsHolder>
+                <IconsHolderBackToUserHome  onClick={handleBackToUserHome}><BackToUserHome title='Back To User Home'/><IconLabel>Back To User Home</IconLabel></IconsHolderBackToUserHome> 
+                </IconsHolder>
+                <IconsHolder>
+                <IconsHolderStyledLogoutIcon onClick={handleLogout} ><StyledLogoutIcon  title="Log Out"/><IconLabel>Log Out</IconLabel> </IconsHolderStyledLogoutIcon>
+                </IconsHolder>
+              </IconsContainer>
                 {filteredPrograms.length > 0 ? (
                     <TileContainer>
                     {filteredPrograms.map((program) => (
@@ -155,14 +176,25 @@ const UserDashboard = () => {
                         <TileLabel>Time:</TileLabel> <Details> {handleTime(program.dateTime)} </Details> 
                         </TileDetails>
                         <TileDetails>
-                        <TileLabel>Duration:</TileLabel> <Details>   {program.duration} </Details> 
+                        <TileLabel>Class Link:</TileLabel> 
+                        <Details>  
+                         {isProgramActive(program.dateTime) ? (
+                              <a href={program.registrationLink}> Class Link </a>
+                            ) : (
+                              <span> Not Available</span>
+                            )}                       
+                        </Details> 
                             {/* <a href={program.registrationLink}>Register Here</a><br />
                             {program.otherLinks?.website && <a href={program.otherLinks.website}>Website</a>}<br />
                             {/* {program.otherLinks?.facebook && <a href={program.otherLinks.facebook}>Facebook</a>}<br />
                             {program.otherLinks?.instagram && <a href={program.otherLinks.instagram}>Instagram</a>}<br /> */} 
                         </TileDetails>
                         <ButtonContainer>
+                        {isProgramActive(program.dateTime) ? null : (
+                          
                             <Button onClick={() => handleExcludeFromProgram(program._id)}>Exclude Me</Button>
+                          
+                        )}
                         </ButtonContainer>
                         </TileContent>
                         </Tile>
