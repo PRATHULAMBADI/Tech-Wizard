@@ -10,6 +10,7 @@ import UserLogInForm from './components/UserLogInForm.jsx';
 import UserSignUpForm from './components/UserSignUpForm.jsx';
 import UserPasswordResetRequestForm from './components/UserPasswordResetRequestForm.jsx';
 import UserPasswordResetForm from './components/UserPasswordResetForm.jsx';
+import UserDashboard from './pages/UserDashboard.jsx'
 
 import OrganizerDetails from'./components/OrganizerDetails.jsx';
 import OrganizerLogInForm from './components/OrganizerLogInForm.jsx';
@@ -38,6 +39,7 @@ const  App = () => {
           <Route path= '/user-signup' element={<UserSignUpForm />} />
           <Route path= '/user-resetPasswordRequest'   element={<UserPasswordResetRequestForm/>}/>
           <Route path= '/user-resetPassword/:resetToken/:email' element={<UserPasswordResetForm  />} />
+          <Route path= '/user-Dashboard' element={<UserDashboard  />} />
                     
           <Route path= '/organizer-home' element={<OrganizerHomePage />} />
           <Route path= '/organizer-login' element={<OrganizerLogInForm/>} />

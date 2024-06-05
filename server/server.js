@@ -228,6 +228,87 @@ app.get('/user-home', authenticateToken, async (req, res) => {
   }
 });
 
+/////////////////////////
+app.post('/user-dashboard/:programId', authenticateToken, async (req, res) => {
+  const userId = req.user._id;
+  const { programId } = req.params;
+
+  try {
+    const user = await BootcampWorkshopUser.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const program = await BootcampWorkshopProgram.findById(programId);
+    if (!program) {
+      return res.status(404).json({ message: 'Program not found' });
+    }
+
+    if (!user.BootcampWorkshopProgram.includes(programId)) {
+      user.BootcampWorkshopProgram.push(programId);
+      await user.save();
+    }
+
+    res.status(200).json({ message: 'Successfully registered to the program' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error registering to the program', error });
+  }
+});
+
+app.get('/user-dashboard', authenticateToken, async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const user = await BootcampWorkshopUser.findById(userId).populate('BootcampWorkshopProgram');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ registeredPrograms: user.BootcampWorkshopProgram });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching registered programs', error });
+  }
+});
+app.post('/user-unregister', authenticateToken, async (req, res) => {
+  const userId = req.user._id;
+  const { programId } = req.body;
+
+  try {
+    const user = await BootcampWorkshopUser.findByIdAndUpdate(
+      userId,
+      { $pull: { BootcampWorkshopProgram: programId } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'Program unregistered successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error unregistering program', error });
+  }
+});
+app.get('/user-registered-programs', authenticateToken, async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const user = await BootcampWorkshopUser.findById(userId).populate('BootcampWorkshopProgram');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ registeredPrograms: user.BootcampWorkshopProgram });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching registered programs', error });
+  }
+});
+
+
+/////////////////////////
+
+
+
 //----------------------------------------------Organizers------------------------------------//
 
 app.get('/organizer-getData', async (req, res) => {

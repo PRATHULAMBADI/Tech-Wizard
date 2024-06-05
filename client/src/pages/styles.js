@@ -9,6 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
 
 // Base styles
 const baseButtonStyles = css`
@@ -93,6 +94,7 @@ width:100%;
   
 `
 export const ContainerHeading = styled.div`
+  margin:0;
   align-content: center;
   background-color: transparent;
   text-align:center;
@@ -106,7 +108,7 @@ export const ContainerHeading = styled.div`
 export const IconsHolder = styled.div`
   display:flex;
   justify-content:space-between;
-  align-text:center;
+  align-items:center;
   padding: 2%;
 
 `;
@@ -166,6 +168,13 @@ export const AddIcon = styled(NoteAddIcon)`
     color: powderblue;
   }
 `;
+export const BackToUserHome = styled(ContactPageIcon)`
+  color: black;
+  font-size: 20px;
+  &:hover {
+    color: powderblue;
+  }
+`;
 
 export const ProgramNotFound = styled.div`
   display: flex;
@@ -177,6 +186,14 @@ export const ProgramNotFound = styled.div`
   color: #fff;
   text-align: center;
   color:powderblue;
+`;
+
+
+
+export const DisabledButton = styled.button`
+  ${baseButtonStyles}
+  opacity: 0.6;
+  cursor: not-allowed;
 `;
 
 
@@ -204,7 +221,7 @@ export const WelcomePageImage = styled.img`
 export const WelcomePageContentHeading = styled.div`
   font-size:20%;
   text-align: center;
-  color: cadetblue;
+  color: darkgoldenrod;
   font-weight: bold;
   text-stroke: 2px white;
   -webkit-text-stroke: 1.4px whitesmoke;
