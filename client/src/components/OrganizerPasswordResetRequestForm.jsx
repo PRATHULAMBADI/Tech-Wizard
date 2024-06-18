@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { 
     BackgroundContainer,
@@ -8,21 +8,31 @@ import {
     InputContainer,
     Container,
     Button,
-    ContainerHeading
+    ContainerHeading,
+    IconsContainer,
+    IconsHolder,
+    IconsHolderStyledHomeIcon,
+    StyledHomeIcon,
+    IconLabel,
+    ErrorMessageContainer,
+    MessageContainer,
+    ButtonContainer
  } from './styles';
 
 const OrganizerPasswordResetRequestForm = () => {
-    const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const [email, setEmail] = useState('');
     const [waiting, setWaiting] =useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const navigate = useNavigate();
 
     //const navigate = useNavigate();
     //console.log('Error:',{error},'Message:',{message},'Email:',{email},'Waiting:',{waiting})
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
-        setError(''); 
+        setErrorMessage(''); 
         try {
           setWaiting(true);
           const response = await axios.post('http://localhost:3000/organizer-resetPasswordRequest', { email });
@@ -34,14 +44,22 @@ const OrganizerPasswordResetRequestForm = () => {
           } catch (error) {
           setWaiting(false);
           console.error('Error submitting request:', error);
-          setError(error.response.data.error || ' Enter a valid Email ');
+          setErrorMessage(error.response.data.error || ' Enter a valid Email ');
           alert(response.data.status);
         }
         console.log('Email:',{email})
     };
+    const handleGoToHome = () =>{
+        navigate('/');
+    }
 
     return (
         <BackgroundContainer>
+            <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+        </IconsContainer>
             <Container>
             <ContainerHeading>Reset Your Password</ContainerHeading>
                 <InputContainer>
@@ -55,11 +73,15 @@ const OrganizerPasswordResetRequestForm = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </InputContainer>
+                {errorMessage && (
+                 <ErrorMessageContainer>{errorMessage}</ErrorMessageContainer>
+                  )}
                 
-            {waiting && <div>Processing request...</div>}
-            {message && <div className="success">{message}</div>}
-            {error && <div className="error">{error}</div>}
+                    {waiting && <  MessageContainer />}
+                    <ButtonContainer>
+            
                 <Button type="submit"  onClick={handleSubmit}>Send</Button>
+                </ButtonContainer>
             </Container>
         </BackgroundContainer>
     );

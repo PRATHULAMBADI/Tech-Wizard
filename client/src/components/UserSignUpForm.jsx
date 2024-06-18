@@ -1,91 +1,8 @@
-// import { useState } from 'react';
-// import axios from 'axios'; 
-// import { useNavigate } from 'react-router-dom';
-// import { 
-//   ContainerHeading,
-//   BackgroundContainer,
-//   Button,
-//   Label,
-//   ButtonContainer,
-//   Container,
-//   Input,
-//   InputContainer,
-//   ErrorMessageContainer
-// } from './styles';
-
-// const UserSignUpForm = () => {
-//   const [name, setName] = useState('');
-//   const [mobile, setMobile] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [errorMessage, setErrorMessage] = useState(''); 
-//   const [password, setPassword] = useState('');  
-
-//   const navigate = useNavigate();
-
-//   const handleSignUpButtonClick = async (e) => {
-//     e.preventDefault();
-//     try{
-//         const response = await axios.post('http://localhost:3000/user-signup', {
-//           name,
-//           mobile,
-//           email,
-//           password,
-//     },{
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//        });
-//       console.log(response.data);
-//       alert('Registration successful. Now you can log in.');
-//       navigate('/organizer-login');
-//     } catch (error) {
-//       console.error(error);
-//       setErrorMessage(error.response?.data.message || "An error occurred during signup.");
-//     }
-//   };
-//   const handleLogInButtonClick = () => {
-//     navigate('/user-login');
-//   };
-
-//   return (
-//     <BackgroundContainer>
-//       <Container>
-//         <ContainerHeading>Sign Up</ContainerHeading>
-//         <InputContainer>
-//         <Label>Name:</Label>
-//         <Input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-//         </InputContainer>
-//         <InputContainer>
-//         <Label>Mobile:</Label>
-//         <Input type="tel" value={mobile} onChange={(e) => setMobile(e.target.value)} required />
-//         </InputContainer>
-//         <InputContainer>
-//         <Label>Email:</Label>
-//         <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-//         </InputContainer><InputContainer>
-//         <Label>Password:</Label>
-//         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-//         </InputContainer>
-//         <ErrorMessageContainer>
-//          { {errorMessage} && {error}}
-//        </ErrorMessageContainer>
-//         <ButtonContainer>
-//         <Button onClick={handleSignUpButtonClick}>Sign Up</Button>
-//         <Button onClick={handleLogInButtonClick}>Login</Button>
-//         </ButtonContainer>
-//       </Container>
-//     </BackgroundContainer>
-//   );
-// };
-
-// export default UserSignUpForm;
-
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// Import your styling components here (replace with actual paths)
+
 import {
   ContainerHeading,
   BackgroundContainer,
@@ -96,7 +13,12 @@ import {
   Input,
   InputContainer,
   ErrorMessageContainer,
-  MessageContainer, // Add LoadingIndicator component for visual feedback
+  MessageContainer, 
+  IconsContainer,
+  IconsHolder,
+  IconsHolderStyledHomeIcon,
+  StyledHomeIcon,
+  IconLabel
 } from './styles';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -107,6 +29,7 @@ const UserSignUpForm = () => {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading,setIsLoading]= useState('');
   
 
   const navigate = useNavigate();
@@ -114,7 +37,7 @@ const UserSignUpForm = () => {
   const handleSignUpButtonClick = async (e) => {
     e.preventDefault();
 
-    // Basic input validation
+
     let isValid = true;
     if (name.trim() === '') {
       setErrorMessage('Please enter your name.');
@@ -131,10 +54,10 @@ const UserSignUpForm = () => {
     }
 
     if (!isValid) {
-      return; // Prevent sending invalid data if validation fails
+      return; 
     }
 
-    // setIsLoading(true); // Set loading indicator to true
+    setIsLoading(true); 
     try {
       const response = await axios.post('http://localhost:3000/user-signup', {
         name,
@@ -154,26 +77,28 @@ const UserSignUpForm = () => {
       console.error(error);
       setErrorMessage(error.response?.data.message || "An error occurred during signup.");
     } finally {
-      setIsLoading(false); // Set loading indicator to false regardless of success/error
+      setIsLoading(false); 
     }
   };
 
   const handleLogInButtonClick = () => {
     navigate('/user-login');
   };
-
+  const handleGoToHome = () =>{
+    navigate('/');
+  }
   return (
     <BackgroundContainer>
+      <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+        </IconsContainer>
       <Container>
-        <ContainerHeading>Sign Up</ContainerHeading>
+        <ContainerHeading>User Sign Up</ContainerHeading>
         <InputContainer>
           <Label>Name:</Label>
-          <Input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <Input type="text" value={name} onChange={(e) => setName(e.target.value)} required/>
         </InputContainer>
         <InputContainer>
           <Label>Mobile:</Label>
@@ -191,7 +116,7 @@ const UserSignUpForm = () => {
           <ErrorMessageContainer>{errorMessage}</ErrorMessageContainer>
         )}
         <ButtonContainer>
-          {/* {isLoading && <  MessageContainer />}  */}
+          {isLoading && <  MessageContainer />} 
           <Button onClick={handleSignUpButtonClick}>Sign Up</Button>
           <Button onClick={handleLogInButtonClick}>Login</Button>
         </ButtonContainer>

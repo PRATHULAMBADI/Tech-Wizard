@@ -65,6 +65,24 @@ app.get('/', (req,res)=>{
     res.send('WelcomePage')
 } )
 
+//----------------------------------------------Chart------------------------------------//
+
+app.get('/api/programCounts', async (req, res) => {
+  try {
+    // Fetch program counts from the database
+    const seminarCount = await BootcampWorkshopProgram.countDocuments({ programType: 'Seminar' });
+    const workshopCount = await BootcampWorkshopProgram.countDocuments({ programType: 'Workshop' });
+    const bootcampCount = await BootcampWorkshopProgram.countDocuments({ programType: 'Bootcamp' });
+
+    // Send the program counts as JSON response with correct content type header
+    res.setHeader('Content-Type', 'application/json');
+    res.json({ seminarCount, workshopCount, bootcampCount });
+  } catch (error) {
+    console.error('Error fetching program counts:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 //----------------------------------------------Users------------------------------------//
 
 app.get('/user-getData', async (req, res) => {
@@ -456,13 +474,14 @@ app.get('/organizer-home', authenticateToken, async (req, res) => {
 app.post('/program-addNew', authenticateToken, upload.single('poster'), async (req, res) => {
   try {
     const {
+      programType,
       name,
       conductingPerson,
       date,
       time,
       venue,
       duration,
-      registrationLink,
+      classLink,
       website,
       facebook,
       instagram,
@@ -483,13 +502,14 @@ app.post('/program-addNew', authenticateToken, upload.single('poster'), async (r
 
     const posterFileName = path.basename(req.file.path);
     const newBootcampWorkshopProgram = new BootcampWorkshopProgram({
+      programType,
       name,
       posterUrl: `http://localhost:3000/${posterFileName}`,
       conductingPerson,
       venue,
       dateTime,
       duration,
-      registrationLink,
+      classLink,
       website,
       facebook,
       instagram,
@@ -528,7 +548,7 @@ app.post('/program-edit/:id', authenticateToken , upload.single('poster'), async
       time, 
       venue, 
       duration,
-      registrationLink, 
+      classLink, 
       website, 
       facebook, 
       instagram 
@@ -541,7 +561,7 @@ app.post('/program-edit/:id', authenticateToken , upload.single('poster'), async
       venue,
       dateTime,
       duration,
-      registrationLink,
+      classLink,
       otherLinks: { website, facebook, instagram },
     };
 

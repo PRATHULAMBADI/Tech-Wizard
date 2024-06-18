@@ -9,8 +9,17 @@ import {
   ButtonContainer,
   Container,
   Input,
-  InputContainer
+  InputContainer,
+  ErrorMessageContainer ,
+  MessageContainer, 
+  IconsContainer,
+  IconsHolder,
+  IconsHolderStyledHomeIcon,
+  StyledHomeIcon,
+  IconLabel
  } from './styles';
+
+ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const OrganizerSignUpForm = () => {
   const [name, setName] = useState('');
@@ -18,7 +27,8 @@ const OrganizerSignUpForm = () => {
   const [organization, setOrganization] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  
+  const [isLoading,setIsLoading]= useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   
   const navigate = useNavigate();
 
@@ -34,14 +44,17 @@ const OrganizerSignUpForm = () => {
     } else if (password.length < 8) {
       setErrorMessage('Password must be at least 8 characters long.');
       isValid = false;
-    } else if (isNaN(mobile) || mobile.toString().length !== 10) {
+    } else if (isNaN(phone) || phone.toString().length !== 10) {
       setErrorMessage('Please enter a valid 10-digit mobile number.');
       isValid = false;
     }
 
     if (!isValid) {
-      return; // Prevent sending invalid data if validation fails
+      return;
     }
+    
+    setIsLoading(true); 
+
     try {
       const response = await axios.post('http://localhost:3000/organizer-signup', {
         name,
@@ -49,22 +62,36 @@ const OrganizerSignUpForm = () => {
         organization,
         phone,
         password,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       console.log(response.data);
       alert('Registration successful. Now you can log in.');
       navigate('/organizer-login');
     } catch (error) {
       console.error(error);
-      setErrorMessage(err.response?.data.message || "An error occurred during signup.");
+      setErrorMessage(error.response?.data.message || "An error occurred during signup.");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
   const handleLogInButtonClick = () => {
     navigate('/organizer-login');
   };
+  const handleGoToHome = () =>{
+    navigate('/');
+  }
 
   return (
     <BackgroundContainer>
+      <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+        </IconsContainer>
       <Container>
         <ContainerHeading>Organizer Sign Up</ContainerHeading>
         <InputContainer>
@@ -91,6 +118,7 @@ const OrganizerSignUpForm = () => {
           <ErrorMessageContainer>{errorMessage}</ErrorMessageContainer>
         )}
         <ButtonContainer>
+          {isLoading && <  MessageContainer />} 
           <Button onClick={handleSubmit}>Sign Up</Button>
           <Button onClick={handleLogInButtonClick}>Login</Button>
         </ButtonContainer>

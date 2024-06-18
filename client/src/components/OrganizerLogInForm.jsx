@@ -1,7 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { ContainerHeading, BackgroundContainer, ForgetPassword, NavLink, Label, Input, InputContainer, Container, Button, ButtonContainer } from './styles';
+import { 
+  ContainerHeading,
+  BackgroundContainer,
+  ForgetPassword,
+  NavLink,
+  Label,
+  Input,
+  InputContainer,
+  Container,
+  Button,
+  ButtonContainer,
+  IconsContainer,
+  IconsHolder,
+  IconsHolderStyledHomeIcon,
+  StyledHomeIcon,
+  IconLabel
+ } from './styles';
 
 const OrganizerLoginForm = () => {
   const [email, setEmail] = useState('');
@@ -37,9 +53,17 @@ const OrganizerLoginForm = () => {
   const handleSignUp = () => {
     navigate('/organizer-signup');
   };
+  const handleGoToHome = () =>{
+    navigate('/');
+  }
 
   return (
    <BackgroundContainer>
+    <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+        </IconsContainer>
     <Container>
       <ContainerHeading>Organizer Log In</ContainerHeading>
       <InputContainer>

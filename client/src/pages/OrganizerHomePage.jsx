@@ -20,7 +20,13 @@ import {
   TileLabel,
   Details,
   Search,
-  ProgramNotFound
+  ProgramNotFound,
+  IconsContainer,
+  IconLabel,
+  IconsHolderStyledHomeIcon,
+  IconsHolderUserRegiteredPrograms,
+  IconsHolderStyledLogoutIcon,
+  IconsHolderSearch
 } from './styles';
 
 const OrganizerHomePage = () => {
@@ -104,8 +110,9 @@ const OrganizerHomePage = () => {
     program.conductingPerson.toLowerCase().includes(searchQuery.toLowerCase()) ||
     handleDate(program.dateTime).includes(searchQuery) ||
     handleTime(program.dateTime).includes(searchQuery) ||
-    program.duration.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    program.duration.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (program.programType && program.programType.toLowerCase().includes(searchQuery.toLowerCase())) // Check if programType is defined before accessing it
+);
   
   if (loading) {
     return <div>Loading...</div>;
@@ -119,12 +126,20 @@ const OrganizerHomePage = () => {
     <BackgroundContainer>
       <Container>
         <ContainerHeading>Welcome to Organizer!</ContainerHeading>
+        <IconsContainer>
           <IconsHolder>
-            <StyledHomeIcon title="Go to Home" onClick={handleGoToHome}/>
-            <Search type="text" placeholder="Search programs..." value={searchQuery} onChange={handleSearch}/>
-            <AddIcon onClick={handleAddNewProgramClick} title='Add New Program'/>
-            <StyledLogoutIcon onClick={handleLogout} title='Log Out'/>
+          <IconsHolderStyledHomeIcon onClick={handleGoToHome}><StyledHomeIcon title="Go to Home" /><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+            </IconsHolder>
+            <IconsHolder>
+            <IconsHolderSearch><Search type="text" placeholder="Search programs..." value={searchQuery} onChange={handleSearch}/></IconsHolderSearch>
+            </IconsHolder>
+            <IconsHolder>
+            <IconsHolderUserRegiteredPrograms onClick={handleAddNewProgramClick}><AddIcon  title='Add New Program'/><IconLabel >Add New Program</IconLabel></IconsHolderUserRegiteredPrograms>
+            </IconsHolder>
+            <IconsHolder>
+            <IconsHolderStyledLogoutIcon  onClick={handleLogout}><StyledLogoutIcon title='Log Out'/><IconLabel >Log Out</IconLabel> </IconsHolderStyledLogoutIcon>
           </IconsHolder>
+          </IconsContainer>
         <div>
           {filteredPrograms.length > 0 ? (
             <TileContainer>
@@ -137,6 +152,9 @@ const OrganizerHomePage = () => {
                   </TileHeading>
                   <TileDetails>
                    <TileLabel> Conducted by:</TileLabel> <Details>{program.conductingPerson}</Details>
+                  </TileDetails>
+                  <TileDetails>
+                    <TileLabel>Program:</TileLabel> <Details>{program.programType}</Details>
                   </TileDetails>
                   <TileDetails>
                    <TileLabel>Date:</TileLabel> <Details> {handleDate(program.dateTime)}</Details>

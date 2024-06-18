@@ -8,7 +8,14 @@ import {
   Container,
   Input,
   ProgramInputContainer,
-  BackgroundContainer
+  BackgroundContainer,
+  ContainerHeading,
+  Select,
+  IconsContainer,
+  IconsHolder,
+  IconLabel,
+  StyledHomeIcon,
+  IconsHolderStyledHomeIcon
 } from './styles';
 
 const ProgramEditForm = () => {
@@ -24,13 +31,14 @@ const ProgramEditForm = () => {
         const response = await axios.get(`http://localhost:3000/program-edit/${id}`);
         const program = response.data;
         setProgramData({
+          type: program.type,
           name: program.name,
           conductingPerson: program.conductingPerson,
           date: program.dateTime.split('T')[0],
           time: program.dateTime.split('T')[1].slice(0, 5),
           venue: program.venue,
           duration: program.duration,
-          registrationLink: program.registrationLink,
+          classLink: program.classLink,
           otherLinks: {
             website: program.otherLinks?.website || '',
             facebook: program.otherLinks?.facebook || '',
@@ -46,6 +54,62 @@ const ProgramEditForm = () => {
 
   const handleUpdateProgram = async (e) => {
     e.preventDefault();
+
+    const {
+      type,
+      name,
+      conductingPerson,
+      date,
+      time,
+      venue,
+      duration,
+      classLink,
+    } = programData;
+
+    // Validation checks
+    if (!type) {
+      setErrorMessage('Program type is required');
+      return;
+    }
+    if (!name) {
+      setErrorMessage('Name is required');
+      return;
+    }
+    if (!poster) {
+      setErrorMessage('Poster URL is required');
+      return;
+    }
+    if (!conductingPerson) {
+      setErrorMessage('Conducting person is required');
+      return;
+    }
+    if (!venue) {
+      setErrorMessage('Venue is required');
+      return;
+    }
+    if (!date || !time) {
+      setErrorMessage('Date and time are required');
+      return;
+    }
+    const dateTime = new Date(`${date}T${time}`);
+    const currentDate = new Date();
+    if (isNaN(dateTime.getTime())) {
+      setErrorMessage('Invalid date and time format');
+      return;
+    }
+    if (dateTime <= currentDate) {
+      setErrorMessage('Enter a valid date');
+      return;
+    }
+    if (!duration) {
+      setErrorMessage('Duration is required');
+      return;
+    }
+    if (!classLink) {
+      setErrorMessage('Class link is required');
+      return;
+    }
+
     const formData = new FormData();
     Object.keys(programData).forEach((key) => {
       if (key === 'otherLinks') {
@@ -94,10 +158,32 @@ const ProgramEditForm = () => {
     setPoster(e.target.files[0]);
   };
 
+  const handleGoToHome = () => {
+    navigate('/');
+  };
+
   return (
     <BackgroundContainer>
+      <IconsContainer>
+        <IconsHolder>
+          <IconsHolderStyledHomeIcon onClick={handleGoToHome}>
+            <StyledHomeIcon title="Go to Home" />
+            <IconLabel>HOME</IconLabel>
+          </IconsHolderStyledHomeIcon>
+        </IconsHolder>
+      </IconsContainer>
       <Container onSubmit={handleUpdateProgram} method="POST" encType="multipart/form-data">
+        <ContainerHeading>EDIT PROGRAM</ContainerHeading>
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        <ProgramInputContainer>
+          <Label>Type:</Label>
+          <Select name="type" value={programData.type || ''} onChange={handleChange} required>
+            <option value="">Select Program Type</option>
+            <option value="Bootcamp">Bootcamp</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Seminar">Seminar</option>
+          </Select>
+        </ProgramInputContainer>
         <ProgramInputContainer>
           <Label>Name:</Label>
           <Input type="text" name="name" value={programData.name || ''} onChange={handleChange} required />
@@ -127,8 +213,8 @@ const ProgramEditForm = () => {
           <Input type="text" name="duration" value={programData.duration || ''} onChange={handleChange} required />
         </ProgramInputContainer>
         <ProgramInputContainer>
-          <Label>Registration Link:</Label>
-          <Input type="url" name="registrationLink" value={programData.registrationLink || ''} onChange={handleChange} required />
+          <Label>Class:</Label>
+          <Input type="text" name="classLink" value={programData.classLink || ''} onChange={handleChange} required />
         </ProgramInputContainer>
         <ProgramInputContainer>
           <Label>Website:</Label>

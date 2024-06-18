@@ -127,8 +127,9 @@ const UserHomePage = () => {
     program.conductingPerson.toLowerCase().includes(searchQuery.toLowerCase()) ||
     handleDate(program.dateTime).includes(searchQuery) ||
     handleTime(program.dateTime).includes(searchQuery) ||
-    program.duration.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    program.duration.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (program.programType && program.programType.toLowerCase().includes(searchQuery.toLowerCase())) // Check if programType is defined before accessing it
+);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -168,6 +169,9 @@ const UserHomePage = () => {
                   </TileDetails>
                   <TileDetails>
                     <TileLabel>Date:</TileLabel> <Details>{handleDate(program.dateTime)}</Details>
+                  </TileDetails>
+                  <TileDetails>
+                    <TileLabel>Program:</TileLabel> <Details>{program.programType}</Details>
                   </TileDetails>
                   <TileDetails>
                     <TileLabel>Time:</TileLabel> <Details>{handleTime(program.dateTime)}</Details>

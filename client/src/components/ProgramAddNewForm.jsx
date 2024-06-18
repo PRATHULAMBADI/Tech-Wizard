@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
-  BackgroundContainer,
   Button,
   Label,
   ButtonContainer,
   Container,
   Input,
   ProgramInputContainer,
+  BackgroundContainer,
   ContainerHeading,
+  Select,
+  IconsContainer,
+  IconsHolder,
+  IconLabel,
+  StyledHomeIcon,
+  IconsHolderStyledHomeIcon
 } from './styles';
 
 const ProgramAddNewForm = () => {
@@ -21,19 +27,31 @@ const ProgramAddNewForm = () => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [duration, setDuration] = useState('');
-  const [registrationLink, setRegistrationLink] = useState('');
+  const [classLink, setClassLink] = useState('');
   const [website, setWebsite] = useState('');
   const [facebook, setFacebook] = useState('');
   const [instagram, setInstagram] = useState('');
+  const [programType, setProgramType] = useState('Bootcamps');
   const navigate = useNavigate();
   
   const [errorMessage, setErrorMessage] = useState('');
 
-  // const tok = localStorage.getItem('authToken');
-  // const oid = JSON.parse(atob(tok.split(".")[1])).id;
-
   const handleCreateNewProgram = async (e) => {
     e.preventDefault();
+
+    // Validate required fields
+    if (!name || !poster || !conductingPerson || !venue || !date || !time || !duration || !classLink) {
+      setErrorMessage('Please fill all required fields');
+      return;
+    }
+
+    const dateTime = new Date(`${date}T${time}`);
+    const currentDate = new Date();
+    if (isNaN(dateTime.getTime()) || dateTime <= currentDate) {
+      setErrorMessage('Enter a valid date and time');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('organizerId', organizerId);
     formData.append('name', name);
@@ -43,10 +61,11 @@ const ProgramAddNewForm = () => {
     formData.append('date', date);
     formData.append('time', time);
     formData.append('duration', duration);
-    formData.append('registrationLink', registrationLink);
+    formData.append('classLink', classLink);
     formData.append('website', website);
     formData.append('facebook', facebook);
     formData.append('instagram', instagram);
+    formData.append('programType', programType);
 
     try {
       const token = localStorage.getItem('authToken');
@@ -63,17 +82,53 @@ const ProgramAddNewForm = () => {
       console.error(err);
       setErrorMessage(err.response?.data?.message || 'An error occurred while adding the program');
     }
-    console.log('organizerId:',{organizerId})
+
+    // Debug log to ensure data being sent correctly
+    console.log('FormData:', {
+      organizerId,
+      name,
+      poster,
+      conductingPerson,
+      venue,
+      date,
+      time,
+      duration,
+      classLink,
+      website,
+      facebook,
+      instagram,
+      programType
+    });
   };
 
   const handleNotNow = () => {
     navigate('/organizer-home');
   };
-
+  
+  const handleGoToHome = () => {
+    navigate('/');
+  };
+  
   return (
     <BackgroundContainer>
+      <IconsContainer>            
+        <IconsHolder>
+          <IconsHolderStyledHomeIcon onClick={handleGoToHome}> 
+            <StyledHomeIcon title="Go to Home"/>
+            <IconLabel>HOME</IconLabel> 
+          </IconsHolderStyledHomeIcon>
+        </IconsHolder>
+      </IconsContainer>
       <Container onSubmit={handleCreateNewProgram} method="POST" encType="multipart/form-data">
         <ContainerHeading>ADD NEW PROGRAM</ContainerHeading>
+        <ProgramInputContainer>
+          <Label>Program Type:</Label>
+          <Select value={programType} onChange={(e) => setProgramType(e.target.value)} required>
+            <option value="Bootcamp">Bootcamp</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Seminar">Seminar</option>
+          </Select>
+        </ProgramInputContainer>
         <ProgramInputContainer>
           <Label>Name:</Label>
           <Input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -103,8 +158,8 @@ const ProgramAddNewForm = () => {
           <Input type="text" value={duration} onChange={(e) => setDuration(e.target.value)} required />
         </ProgramInputContainer>
         <ProgramInputContainer>
-          <Label>Registration Link:</Label>
-          <Input type="url" value={registrationLink} onChange={(e) => setRegistrationLink(e.target.value)} required />
+          <Label>Class Link:</Label>
+          <Input type="url" value={classLink} onChange={(e) => setClassLink(e.target.value)} required />
         </ProgramInputContainer>
         <ProgramInputContainer>
           <Label>Website:</Label>

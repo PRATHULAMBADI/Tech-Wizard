@@ -11,7 +11,12 @@ import {
     Button,
     ContainerHeading,
     ErrorMessageContainer,
-    MessageContainer
+    MessageContainer,
+    IconsContainer,
+    IconsHolder,
+    IconsHolderStyledHomeIcon,
+    StyledHomeIcon,
+    IconLabel
 } from './styles';
 
 const UserPasswordResetRequestForm = () => {
@@ -43,9 +48,16 @@ const UserPasswordResetRequestForm = () => {
         }
         console.log('Email:',{email})
     };
-
+    const handleGoToHome = () =>{
+        navigate('/');
+    }
     return (
         <BackgroundContainer>
+            <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+        </IconsContainer>
             <Container>
             <ContainerHeading>Reset Your Password</ContainerHeading>
                 <InputContainer>

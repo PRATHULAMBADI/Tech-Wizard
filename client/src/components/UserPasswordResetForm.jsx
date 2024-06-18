@@ -12,7 +12,12 @@ import {
     ButtonContainer,
     Button,
     MessageContainer,
-    ErrorMessageContainer
+    ErrorMessageContainer,
+    IconsContainer,
+    IconsHolder,
+    IconsHolderStyledHomeIcon,
+    StyledHomeIcon,
+    IconLabel
 } from './styles';
 
 const UserPasswordResetForm = () => {
@@ -33,10 +38,26 @@ const UserPasswordResetForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setMessage('');
+        setErrorMessage(''); 
         if (newPassword !== confirmPassword) {
             setErrorMessage("Passwords do not match.");
             return;
         }
+        let isValid = true;
+        if (newPassword.length < 8) {
+            setErrorMessage('Password must be at least 8 characters long.');
+            isValid = false;
+        } else if (newPassword !== confirmPassword) {
+            setErrorMessage('Passwords do not match.');
+            isValid = false;
+        }
+    
+        if (!isValid) {
+          return;
+        }
+        
+        setIsLoading(true);
 
         try {
             const response = await axios.post(
@@ -53,11 +74,20 @@ const UserPasswordResetForm = () => {
             }
         } catch (error) {
             setErrorMessage(error.response?.data.message || "An error occurred during resetting password.");
+        }finally {
+           setIsLoading(false); 
         }
     };
-
+    const handleGoToHome = () =>{
+        navigate('/');
+    }
     return (
         <BackgroundContainer>
+            <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+        </IconsContainer>
             <Container onSubmit={handleSubmit}>
                 <ContainerHeading>Reset Password</ContainerHeading>
                 <InputContainer>              

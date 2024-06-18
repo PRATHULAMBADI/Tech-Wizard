@@ -11,6 +11,11 @@ import {
     Label,
     InputContainer,
     Input,
+    IconsContainer,
+    IconsHolder,
+    IconsHolderStyledHomeIcon,
+    StyledHomeIcon,
+    IconLabel
 
  } from './styles';
 
@@ -18,8 +23,11 @@ const OrganizerPasswordResetForm = () => {
     const [newPassword, setNewPassword] = useState('');    
     const [confirmPassword, setConfirmPassword] = useState(''); 
     const [email, setEmail] = useState('');
-    const navigate = useNavigate();
     const { resetToken, email: encodedEmail } = useParams();
+    const [errorMessage, setErrorMessage] = useState('');
+    const {waiting,SetWaiting} =useState('');
+
+    const navigate = useNavigate();
 
     console.log(resetToken, encodedEmail);
 
@@ -32,7 +40,22 @@ const OrganizerPasswordResetForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('hi')
+
+
+        let isValid = true;
+         if (newPassword.length < 8) {
+            setErrorMessage('Password must be at least 8 characters long.');
+            isValid = false;
+        } else if (newPassword !== confirmPassword) {
+            setErrorMessage('Passwords do not match.');
+            isValid = false;
+        }
+    
+        if (!isValid) {
+          return;
+        }
+        
+        SetWaiting(true);
         try {
             const response = await axios.post(
                 `http://localhost:3000/organizer-resetPassword/${resetToken}/${encodeURIComponent(encodedEmail)}`,
@@ -50,9 +73,16 @@ const OrganizerPasswordResetForm = () => {
             console.error('Error resetting password:', error);
         }
     };
-
+    const handleGoToHome = () =>{
+        navigate('/');
+    }
     return (
         <BackgroundContainer>
+            <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+        </IconsContainer>
             <Container onSubmit={handleSubmit}>
             <ContainerHeading>Reset Password</ContainerHeading>
                 <InputContainer>              
@@ -67,7 +97,11 @@ const OrganizerPasswordResetForm = () => {
                   <Label>Confirm Password:</Label>
                   <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                 </InputContainer>
+                {errorMessage && (
+                 <ErrorMessageContainer>{errorMessage}</ErrorMessageContainer>
+                  )}
                 <ButtonContainer>
+                    {waiting && <  MessageContainer />} 
                     <Button type="submit">Update</Button>
                 </ButtonContainer>
             </Container>

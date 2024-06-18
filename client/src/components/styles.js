@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom'
+import HomeIcon from '@mui/icons-material/Home';
 
 // import OrganizerLoginFormBackgroundImg from '../images/d.png';
 // import UserLoginFormBackgroundImg from '../images/c1.png';
@@ -7,6 +8,9 @@ import { Link } from 'react-router-dom'
 // import UserSignUpFormBackgroundImg from '../images/d.png'
 // import OrganizerSignUpFormBackgroundImg from '../images/f.png'
 // import OrganizerPasswordResetRequestFormBackgroundImg from '../images/d.png'  
+
+
+
 //==================================== General ===================================//
 
 // Base styles
@@ -31,6 +35,25 @@ export const Button = styled.button`
   ${baseButtonStyles}
 `;
 
+export const StyledHomeIcon = styled(HomeIcon)`
+  color: black;
+  font-size: 40px;
+  &:hover {
+    color: powderblue;
+    title:"home";
+  }
+`;
+
+const IconsHolderStyle =css`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:2%;
+  &:hover {
+    color: powderblue;
+  }
+`
 
 export  const ButtonContainer = styled.div`
   display:flex;
@@ -105,6 +128,39 @@ export const Input = styled.input`
   width:50%;
 `;
 
+export const SelectWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 100%;
+`;
+
+export const Arrow = styled.div`
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  background-image: url('data:image/svg+xml;base64,<base64-encoded-image>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  transform: translateY(-50%);
+`;
+
+export const Select = styled.select`
+  padding: 8px;
+  border: 1px solid  #ccc;
+  border-radius: 15px;
+  font-size: 14px;
+  width:53%;
+
+  &:hover,
+  &:focus {
+    border-color: #777;
+  }
+`;
+
 export const Container = styled.form`
   width: 40%;
   padding: .5%;
@@ -173,7 +229,7 @@ export const WelcomePageMainHeadingIcon = styled.img`
 `
 
 
-//================================UserLoginForm===============================//
+//================================User/OrganizerLoginForm===============================//
 
 
 
@@ -189,6 +245,34 @@ export const WelcomePageMainHeadingIcon = styled.img`
 //   background-color: whitesmoke;
 //   align-self:center;
 // `;
+export const IconsHolderStyledHomeIcon =styled.div`
+  ${IconsHolderStyle}
+`
+
+export const IconsContainer = styled.div`
+  color:white;
+  // background-color:cyan;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:2% 0;
+`;
+
+export const IconsHolder = styled.div`
+  width:25%;
+//  background-color:red;
+`;
+
+export const IconLabel = styled.label`
+  color:black;
+  background-color:transparent;
+  font-size: 16px;
+  font-weight:normal;
+  &:hover {
+    color: powderblue;
+  }
+`
 
 export const UserLoginFormHeading = styled.div`
 

@@ -7,6 +7,11 @@ const bootcampWorkshopProgramSchema = new Schema({
     type: String,
     required: true,
   },
+  programType: {
+    type: String,
+    required: true,
+    enum: [`Bootcamp`, `Workshop`, `Seminar`],
+  },
   posterUrl: {
     type: String,
     required: true,
@@ -27,7 +32,7 @@ const bootcampWorkshopProgramSchema = new Schema({
     type: String,
     required: true,
   },
-  registrationLink: {
+  classLink: {
     type: String,
     required: true,
   },

@@ -12,7 +12,13 @@ import {
   Container, 
   Button, 
   ButtonContainer,
-  ErrorMessageContainer
+  ErrorMessageContainer,
+  IconsContainer,
+  IconsHolder,
+  IconsHolderStyledHomeIcon,
+  StyledHomeIcon,
+  IconLabel
+
 } from './styles';
 
 const UserLoginForm = () => {
@@ -32,14 +38,14 @@ const UserLoginForm = () => {
           "Content-Type": "application/json",
         },
       });
-      
-      localStorage.setItem('authToken', response.data.token);
-      
+       
       if (response?.data.auth) {
+        localStorage.setItem('authToken', response.data.token);
         navigate('/user-home');
       } else {
         alert("Login Failed");
         navigate('/user-login');
+        setErrorMessage('Invalid email or password.');
       }
     } catch (err) {
       setErrorMessage(err.response?.data.message || "An error occurred during login.");
@@ -50,10 +56,19 @@ const UserLoginForm = () => {
     navigate('/user-signup');
   };
 
+  const handleGoToHome = () =>{
+    navigate('/');
+  }
+
   return (
     <BackgroundContainer>
+      <IconsContainer>            
+          <IconsHolder>
+            <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>
+          </IconsHolder>
+        </IconsContainer>
       <Container>
-        <ContainerHeading>Log In</ContainerHeading>
+        <ContainerHeading>User Log In</ContainerHeading>        
         <InputContainer>
           <Label htmlFor="email" className="Label">Email:</Label>
           <Input type="email" id="email" className="Input" value={email} onChange={(e) => setEmail(e.target.value)} required />
