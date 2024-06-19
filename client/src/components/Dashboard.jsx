@@ -1,60 +1,93 @@
-import React, { useEffect, useState } from 'react';
-import Chart from 'chart.js/auto';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import styled from "styled-components";
+import PieChart from "./Piechart";
+
+const DashboardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 70%;
+  margin: 0 auto;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+`;
+
+const InfoItem = styled.div`
+  text-align: center;
+  font-size: 18px;
+  color: cadetblue;
+`;
+
+const AdditionalInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  margin-top: 20px;
+`;
+
+const AdditionalInfoItem = styled.div`
+  text-align: center;
+  font-size: 18px;
+  color: darkgoldenrod;
+`;
 
 const Dashboard = () => {
-  const [programCounts, setProgramCounts] = useState([]);
+  const [data, setData] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProgramCounts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/programCounts');
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
-        }
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-          throw new Error('Invalid response content type.');
-        }
-        const data = await response.json();
-        // Process the JSON data
-        console.log('Program counts:', data);
+        const response = await axios.get(
+          "http://localhost:3000/api/programCounts"
+        );
+        console.log("Response:", response.data);
+        setData(response.data);
       } catch (error) {
-        console.error('Error fetching program counts:', error.message);
-        // Handle the error (e.g., show a message to the user)
+        console.error("Error fetching Count:", error);
+        setError("Error fetching Count. Please try again later.");
       }
     };
-    
 
-    fetchProgramCounts();
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    if (programCounts.length > 0) {
-      const ctx = document.getElementById('programTypesChart');
-      if (ctx) {
-        new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: programCounts.map((item) => item.label),
-            datasets: [
-              {
-                label: 'Program Types',
-                data: programCounts.map((item) => item.count),
-                backgroundColor: ['#ff6384', '#36a2eb', '#ffce56'], // Colors for each program type
-              },
-            ],
-          },
-        });
-      }
-    }
-  }, [programCounts]);
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
-    <div className="dashboard-container">
-      <div className="chart-container">
-        <canvas id="programTypesChart" width="400" height="400"></canvas>
-      </div>
-    </div>
+    <DashboardContainer>
+      <InfoContainer>
+        <InfoItem>Workshop: {data.workshopCount || 0}</InfoItem>
+        <InfoItem>Seminar: {data.seminarCount || 0}</InfoItem>
+        <InfoItem>Bootcamp: {data.bootcampCount || 0}</InfoItem>
+      </InfoContainer>
+      <PieChart data={data} />
+      <AdditionalInfoContainer>
+        <AdditionalInfoItem>Users: {data.usersCount || 0}</AdditionalInfoItem>
+        <AdditionalInfoItem>
+          Organizers: {data.organizerCount || 0}
+        </AdditionalInfoItem>
+        <AdditionalInfoItem>
+          Live Programs:{" "}
+          {data.workshopCount + data.seminarCount + data.bootcampCount || 0}
+        </AdditionalInfoItem>
+      </AdditionalInfoContainer>
+    </DashboardContainer>
   );
 };
 

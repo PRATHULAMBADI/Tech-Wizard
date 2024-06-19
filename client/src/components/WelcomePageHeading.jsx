@@ -1,12 +1,22 @@
-import React from 'react';
-import icon from '../images/1.png';
-import { WelcomePageMainHeadingIcon,BackgroundContainer,WelcomePageMainHeading } from './styles';
+import React from "react";
+import icon from "../images/1.png";
+import {
+  WelcomePageMainHeadingIcon,
+  BackgroundContainer,
+  WelcomePageMainHeading,
+} from "./styles";
 
 const WelcomePageHeading = () => {
   return (
     <BackgroundContainer>
-      <WelcomePageMainHeading>Tech<WelcomePageMainHeadingIcon src={ icon } alt='WelcomePageMainHeadingIcon'/>Wizard</WelcomePageMainHeading>
-      
+      <WelcomePageMainHeading>
+        Tech
+        <WelcomePageMainHeadingIcon
+          src={icon}
+          alt="WelcomePageMainHeadingIcon"
+        />
+        Wizard
+      </WelcomePageMainHeading>
     </BackgroundContainer>
   );
 };
