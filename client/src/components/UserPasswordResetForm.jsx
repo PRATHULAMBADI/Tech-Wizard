@@ -7,10 +7,10 @@ import {
     BackgroundContainer,
     Container,
     InputContainer,
+    Button,
     Label,
     Input,
-    ButtonContainer,
-    Button,
+    ButtonContainer,   
     MessageContainer,
     ErrorMessageContainer,
     IconsContainer,
@@ -18,7 +18,7 @@ import {
     IconsHolderStyledHomeIcon,
     StyledHomeIcon,
     IconLabel
-} from './styles';
+} from './UserPasswordResetFormStyles';
 
 const UserPasswordResetForm = () => {
     const [newPassword, setNewPassword] = useState('');    

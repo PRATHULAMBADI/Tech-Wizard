@@ -17,7 +17,7 @@ import {
   IconsHolderStyledHomeIcon,
   StyledHomeIcon,
   IconLabel
- } from './styles';
+ } from './OrganizerSignUpFormstyles';
 
  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

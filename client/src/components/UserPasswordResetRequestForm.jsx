@@ -17,7 +17,7 @@ import {
     IconsHolderStyledHomeIcon,
     StyledHomeIcon,
     IconLabel
-} from './styles';
+} from './UserPasswordResetRequestFormStyles';
 
 const UserPasswordResetRequestForm = () => {
     const [error, setError] = useState('');

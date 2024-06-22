@@ -19,7 +19,7 @@ import {
   StyledHomeIcon,
   IconLabel
 
-} from './styles';
+} from './UserLogInFormStyles';
 
 const UserLoginForm = () => {
   const [email, setEmail] = useState('');

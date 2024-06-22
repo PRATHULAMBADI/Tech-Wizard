@@ -31,7 +31,7 @@ const ProgramAddNewForm = () => {
   const [website, setWebsite] = useState('');
   const [facebook, setFacebook] = useState('');
   const [instagram, setInstagram] = useState('');
-  const [programType, setProgramType] = useState('Bootcamps');
+  const [programType, setProgramType] = useState('Select a Type');
   const navigate = useNavigate();
   
   const [errorMessage, setErrorMessage] = useState('');
@@ -40,8 +40,32 @@ const ProgramAddNewForm = () => {
     e.preventDefault();
 
     // Validate required fields
-    if (!name || !poster || !conductingPerson || !venue || !date || !time || !duration || !classLink) {
+    if (!programType) {
+      setErrorMessage("Program type is required");
+      return;
+    }
+    if (!name ) {
       setErrorMessage('Please fill all required fields');
+      return;
+    }
+    if(!conductingPerson) {
+      setErrorMessage('Please Enter a Conducting Person Name');
+      return;
+    }
+    if(!venue) {
+      setErrorMessage('Please Enter a Conducting Person Name');
+      return;
+    }
+    if(!date) {
+      setErrorMessage('Please Enter a Date of the Class');
+      return;
+    }
+    if(!time) {
+      setErrorMessage('Please Enter a Time of the Class');
+      return;
+    }
+    if(!duration) {
+      setErrorMessage('Please Enter a Duration of the class');
       return;
     }
 
@@ -124,6 +148,7 @@ const ProgramAddNewForm = () => {
         <ProgramInputContainer>
           <Label>Program Type:</Label>
           <Select value={programType} onChange={(e) => setProgramType(e.target.value)} required>
+            <option value="">Select Program Type</option>
             <option value="Bootcamp">Bootcamp</option>
             <option value="Workshop">Workshop</option>
             <option value="Seminar">Seminar</option>
@@ -159,7 +184,7 @@ const ProgramAddNewForm = () => {
         </ProgramInputContainer>
         <ProgramInputContainer>
           <Label>Class Link:</Label>
-          <Input type="url" value={classLink} onChange={(e) => setClassLink(e.target.value)} required />
+          <Input type="url" value={classLink} onChange={(e) => setClassLink(e.target.value)} />
         </ProgramInputContainer>
         <ProgramInputContainer>
           <Label>Website:</Label>

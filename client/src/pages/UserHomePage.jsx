@@ -28,7 +28,7 @@ import {
   IconsHolderUserRegiteredPrograms,
   IconsHolderStyledLogoutIcon,
   IconsHolderSearch
-} from './styles';
+} from './UserHomePageStyles';
 
 const UserHomePage = () => {
   const [programs, setPrograms] = useState([]);

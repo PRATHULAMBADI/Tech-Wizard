@@ -4,7 +4,7 @@ import {
   WelcomePageMainHeadingIcon,
   BackgroundContainer,
   WelcomePageMainHeading,
-} from "./styles";
+} from "./WelcomePageHeadingStyles";
 
 const WelcomePageHeading = () => {
   return (

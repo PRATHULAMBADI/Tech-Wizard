@@ -374,6 +374,7 @@ app.get("/organizer-getData", async (req, res) => {
   res.status(200).json(organizerDetails);
 });
 
+
 app.post("/organizer-login", async (req, res) => {
   try {
     const organizer = await BootcampWorkshopOrganizer.findOne({

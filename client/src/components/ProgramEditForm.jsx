@@ -33,7 +33,7 @@ const ProgramEditForm = () => {
         );
         const program = response.data;
         setProgramData({
-          type: program.type,
+          programType: program.type,
           name: program.name,
           conductingPerson: program.conductingPerson,
           date: program.dateTime.split("T")[0],
@@ -58,18 +58,17 @@ const ProgramEditForm = () => {
     e.preventDefault();
 
     const {
-      type,
+      programType,
       name,
       conductingPerson,
       date,
       time,
       venue,
       duration,
-      classLink,
     } = programData;
 
     // Validation checks
-    if (!type) {
+    if (!programType) {
       setErrorMessage("Program type is required");
       return;
     }
@@ -105,10 +104,6 @@ const ProgramEditForm = () => {
     }
     if (!duration) {
       setErrorMessage("Duration is required");
-      return;
-    }
-    if (!classLink) {
-      setErrorMessage("Class link is required");
       return;
     }
 

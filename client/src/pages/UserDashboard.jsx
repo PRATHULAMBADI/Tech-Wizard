@@ -27,7 +27,7 @@ import {
     IconsHolderStyledLogoutIcon,
     IconsHolderBackToUserHome,
     IconsHolderSearch
-  } from './styles';
+  } from './UserDashboardStyles';
 
 const UserDashboard = () => {
   const [registeredPrograms, setRegisteredPrograms] = useState([]);

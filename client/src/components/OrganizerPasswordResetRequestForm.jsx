@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { 
+    ButtonContainer,
     BackgroundContainer,
     Label ,
     Input,
@@ -9,15 +10,14 @@ import {
     Container,
     Button,
     ContainerHeading,
+    ErrorMessageContainer,
+    MessageContainer,
     IconsContainer,
     IconsHolder,
     IconsHolderStyledHomeIcon,
     StyledHomeIcon,
-    IconLabel,
-    ErrorMessageContainer,
-    MessageContainer,
-    ButtonContainer
- } from './styles';
+    IconLabel    
+ } from './OrganizerPasswordResetRequestFormStyles';
 
 const OrganizerPasswordResetRequestForm = () => {
     const [message, setMessage] = useState('');

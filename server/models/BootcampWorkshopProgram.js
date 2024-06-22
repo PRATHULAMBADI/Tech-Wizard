@@ -34,7 +34,6 @@ const bootcampWorkshopProgramSchema = new Schema({
   },
   classLink: {
     type: String,
-    required: true,
   },
   otherLinks: {
     website: {

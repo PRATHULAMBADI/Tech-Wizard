@@ -1,8 +1,4 @@
 import styled, { css } from "styled-components";
-// import { Link } from 'react-router-dom';
-
-// icons from Material-UI
-
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
 import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
 import HomeIcon from "@mui/icons-material/Home";
@@ -31,21 +27,7 @@ const baseButtonStyles = css`
   }
 `;
 
-const tileStyles = css`
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1%;
-  width: 14%;
-  text-align: center;
-  transition: transform 0.2s;
-  height: fit-content;
 
-  &:hover {
-    transform: translateY(-5px);
-  }
-`;
 
 const IconsHolderStyle = css`
   width: 100%;
@@ -110,25 +92,7 @@ export const ContainerHeading = styled.div`
   font-size: 30%;
 `;
 
-export const StyledArrowCircleLeftOutlinedIcon = styled(
-  ArrowCircleLeftOutlinedIcon
-)`
-  color: cadetblue;
-  font-size: 2rem;
-  &:hover {
-    color: powderblue;
-  }
-`;
 
-export const StyledArrowCircleRightOutlinedIcon = styled(
-  ArrowCircleRightOutlinedIcon
-)`
-  color: cadetblue;
-  font-size: 2rem;
-  &:hover {
-    color: powderblue;
-  }
-`;
 
 export const StyledHomeIcon = styled(HomeIcon)`
   color: black;
@@ -198,49 +162,14 @@ export const DisabledButton = styled.button`
 
 //================================ WelcomePage ===============================//
 
-export const WelcomePageImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
-export const WelcomePageImage = styled.img`
-  border: none;
-  border-radius: 15%;
-  width: 10%;
-  height: 10%;
-  padding: 1%;
-`;
-
-export const WelcomePageContentHeading = styled.div`
-  font-size: 20%;
-  text-align: center;
-  color: darkgoldenrod;
-  font-weight: bold;
-  text-stroke: 2px white;
-  -webkit-text-stroke: 1.4px whitesmoke;
-`;
-export const WelcomePageDetails = styled.div`
-  font-size: 12%;
-  padding: 0 14%;
-  text-align: justify;
-  font-weight: normal;
-`;
 export const BackgroundContainer = styled.div`
-  // width: 100vw;
-  // height: fit-content;
-  // align-content: center;  
-
   font-size: 134px;
   font-weight: bold;
   color: cadetblue;
-  position absolute;
-  
+  position absolute;  
 `;
-export const WelcomePageButton = styled.button`
-  ${baseButtonStyles}
-  width:10%
-`;
+
 
 //-----------------------------------------UserSignUpFormBackground---------------------------------------------------//
 
@@ -262,7 +191,6 @@ export const IconsContainer = styled.div`
 
 export const IconsHolder = styled.div`
   width: 25%;
-  //  background-color:red;
 `;
 
 export const IconLabel = styled.label`
@@ -275,24 +203,29 @@ export const IconLabel = styled.label`
   }
 `;
 
-export const IconsHolderStyledHomeIcon = styled.div`
-  ${IconsHolderStyle}
+
+const tileStyles = css`
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1%;
+  width: 14%;
+  text-align: center;
+  transition: transform 0.2s;
+  height: fit-content;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
-export const IconsHolderUserRegiteredPrograms = styled.div`
-  ${IconsHolderStyle}
+export const Tile = styled.li`
+  ${tileStyles}
 `;
 
-export const IconsHolderStyledLogoutIcon = styled.div`
-  ${IconsHolderStyle}
-`;
-
-export const IconsHolderSearch = styled.div`
-  ${IconsHolderStyle}
-`;
-
-export const IconsHolderBackToUserHome = styled.div`
-  ${IconsHolderStyle}
+export const TileImage = styled.img`
+  width: 100%;
 `;
 
 export const TileContent = styled.div``;
@@ -325,12 +258,33 @@ export const TileContainer = styled.ul`
   justify-content: center;
 `;
 
-export const Tile = styled.li`
-  ${tileStyles}
+export const TileLabel = styled(Label)`
+  font-weight: normal;
+  color: lightseagreen;
 `;
-export const TileImage = styled.img`
-  width: 100%;
+
+export const IconsHolderStyledHomeIcon = styled.div`
+  ${IconsHolderStyle}
 `;
+
+export const IconsHolderUserRegiteredPrograms = styled.div`
+  ${IconsHolderStyle}
+`;
+
+export const IconsHolderStyledLogoutIcon = styled.div`
+  ${IconsHolderStyle}
+`;
+
+export const IconsHolderSearch = styled.div`
+  ${IconsHolderStyle}
+`;
+
+export const IconsHolderBackToUserHome = styled.div`
+  ${IconsHolderStyle}
+`;
+
+
+
 
 export const ExtentedButtonContainer = styled(ButtonContainer)`
   display: flex;
@@ -347,10 +301,7 @@ export const ExtentedButton = styled(Button)`
   color: gray;
 `;
 
-export const TileLabel = styled(Label)`
-  font-weight: normal;
-  color: lightseagreen;
-`;
+
 
 export const Details = styled.div`
   text-transform: uppercase;

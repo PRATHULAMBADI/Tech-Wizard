@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { BackgroundContainer } from './styles';
+
 
 const UserDetails = () => {
   const [users, setUsers] = useState([]);

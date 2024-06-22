@@ -1,22 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ImageURL from "../images/m.png";
 import WelcomePageHeading from "../components/WelcomePageHeading";
 import Dashboard from "../components/Dashboard";
 
 import {
   ButtonContainerHeading,
   WelcomePageContentHeading,
-  WelcomePageImageContainer,
-  WelcomePageImage,
   WelcomePageDetails,
   BackgroundContainer,
   ButtonContainer,
   StyledArrowCircleRightOutlinedIcon,
   StyledArrowCircleLeftOutlinedIcon,
   WelcomePageButton,
-} from "./styles";
-// import axios from 'axios';
+} from "./WelcomePageStyle";
+
 
 const WelcomePage = () => {
   const navigate = useNavigate();

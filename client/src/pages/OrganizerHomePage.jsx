@@ -27,7 +27,7 @@ import {
   IconsHolderUserRegiteredPrograms,
   IconsHolderStyledLogoutIcon,
   IconsHolderSearch,
-} from "./styles";
+} from "./OrganizerHomePageStyles";
 
 const OrganizerHomePage = () => {
   const [programs, setPrograms] = useState([]);
