@@ -50,6 +50,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const BackgroundContainer = styled.div`
+  width: 100vw;
   font-size: 134px;
   font-weight: bold;
   color: cadetblue;

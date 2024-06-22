@@ -27,19 +27,19 @@ const baseButtonStyles = css`
 `;
 
 const tileStyles = css`
-background-color: #fff;
-border: 1px solid #ddd;
-border-radius: 8px;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-padding: 1%;
-width: 14%;
-text-align: center;
-transition: transform 0.2s;
-height: fit-content;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1%;
+  width: 14%;
+  text-align: center;
+  transition: transform 0.2s;
+  height: fit-content;
 
-&:hover {
-  transform: translateY(-5px);
-}
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
 export const StyledHomeIcon = styled(HomeIcon)`
@@ -75,6 +75,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const BackgroundContainer = styled.div`
+  width: 100vw;
   font-size: 134px;
   font-weight: bold;
   color: cadetblue;

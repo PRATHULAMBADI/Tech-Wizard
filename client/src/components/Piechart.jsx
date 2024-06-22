@@ -1,15 +1,14 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import styled from "styled-components";
+import {
+  PieChartContainer,
+
+}from './PiechartStyles'
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChartContainer = styled.div`
-  width: 40%; /* Adjust the width as needed */
-  margin: 0 auto; /* Center the PieChart */
-  padding: 20px;
-`;
+
 
 const PieChart = ({ data }) => {
   const chartData = {

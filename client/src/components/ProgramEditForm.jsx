@@ -33,7 +33,7 @@ const ProgramEditForm = () => {
         );
         const program = response.data;
         setProgramData({
-          programType: program.type,
+          programType: program.programType,
           name: program.name,
           conductingPerson: program.conductingPerson,
           date: program.dateTime.split("T")[0],

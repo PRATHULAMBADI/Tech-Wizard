@@ -109,42 +109,13 @@ app.get("/user-getData", async (req, res) => {
   const userDetails = await BootcampWorkshopUser.find();
   res.status(200).json(userDetails);
 });
-
-// app.post("/user-login", async (req, res) => {
-//   try {
-//     const user = await BootcampWorkshopUser.findOne({ email: req.body.email });
-//     if (!user) {
-//       return res
-//         .status(401)
-//         .json({ auth: false, message: "Invalid username/password" });
-//     }
-//     const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
-//     if (!isPasswordValid) {
-//       return res
-//         .status(401)
-//         .json({ auth: false, message: "Invalid username/password" });
-//     }
-
-//     // Generate a token
-//     const token = jwt.sign({ id: user._id, name:user.name }, jwtSecret, { expiresIn: '1h' });
-
-//     res
-//       .status(200)
-//       .json({ auth: true, token: token, message: "Login successful" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// });
-
-///////////////////////////
 app.post("/user-login", async (req, res) => {
   try {
     const user = await BootcampWorkshopUser.findOne({ email: req.body.email });
     if (!user) {
       return res
         .status(401)
-        .json({ auth: false, message: "Invalid username/password" });
+        .json({ auth: false, message: "Invalid username or password" });
     }
     const isPasswordValid = await bcrypt.compare(
       req.body.password,
@@ -153,7 +124,7 @@ app.post("/user-login", async (req, res) => {
     if (!isPasswordValid) {
       return res
         .status(401)
-        .json({ auth: false, message: "Invalid username/password" });
+        .json({ auth: false, message: "Invalid username or password" });
     }
 
     const token = jwt.sign({ id: user._id, name: user.name }, jwtSecret, {
@@ -168,19 +139,23 @@ app.post("/user-login", async (req, res) => {
   }
 });
 
-///////////////////////////
-
 app.get("/user-logout", (req, res) => {
   res.redirect("/login");
 });
 
 app.post("/user-signup", async (req, res) => {
   try {
-    const existingUser = await BootcampWorkshopUser.findOne({
+    const existingOrganizerEmail = await BootcampWorkshopUser.findOne({
       email: req.body.email,
     });
-    if (existingUser) {
-      return res.status(400).json({ message: "Email already exists" });
+    const existingOrganizerMobile = await BootcampWorkshopUser.findOne({
+      mobile: req.body.mobile,
+    });
+    if (existingOrganizerEmail) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+    if (existingOrganizerMobile) {
+      return res.status(400).json({ message: "Mobile number already registered" });
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newBootcampWorkshopUser = new BootcampWorkshopUser({
@@ -277,7 +252,6 @@ app.get("/user-home", authenticateToken, async (req, res) => {
   }
 });
 
-/////////////////////////
 app.post("/user-dashboard/:programId", authenticateToken, async (req, res) => {
   const userId = req.user._id;
   const { programId } = req.params;
@@ -365,8 +339,6 @@ app.get("/user-registered-programs", authenticateToken, async (req, res) => {
   }
 });
 
-/////////////////////////
-
 //----------------------------------------------Organizers------------------------------------//
 
 app.get("/organizer-getData", async (req, res) => {
@@ -383,7 +355,7 @@ app.post("/organizer-login", async (req, res) => {
     if (!organizer) {
       return res
         .status(401)
-        .json({ auth: false, message: "Invalid username/password" });
+        .json({ auth: false, message: "Invalid username or password" });
     }
     const isPasswordValid = await bcrypt.compare(
       req.body.password,
@@ -392,7 +364,7 @@ app.post("/organizer-login", async (req, res) => {
     if (!isPasswordValid) {
       return res
         .status(401)
-        .json({ auth: false, message: "Invalid username/password" });
+        .json({ auth: false, message: "Invalid username or password" });
     }
 
     // Generate a token
@@ -415,11 +387,17 @@ app.get("/organizer-logout", (req, res) => {
 
 app.post("/organizer-signup", async (req, res) => {
   try {
-    const existingOrganizer = await BootcampWorkshopOrganizer.findOne({
+    const existingOrganizerEmail = await BootcampWorkshopOrganizer.findOne({
       email: req.body.email,
     });
-    if (existingOrganizer) {
-      return res.status(400).json({ message: "Email already exists" });
+    const existingOrganizerPhone = await BootcampWorkshopOrganizer.findOne({
+      phone: req.body.phone,
+    });
+    if (existingOrganizerEmail) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+    if (existingOrganizerPhone) {
+      return res.status(400).json({ message: "Mobile number already registered" });
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newBootcampWorkshopOrganizer = new BootcampWorkshopOrganizer({
@@ -606,7 +584,7 @@ app.post(
     try {
       const { id } = req.params;
       const {
-        type,
+        programType,
         name,
         conductingPerson,
         date,
@@ -621,7 +599,7 @@ app.post(
 
       const dateTime = new Date(`${date}T${time}`);
       const updateData = {
-        programType: type,
+        programType: programType,
         name,
         conductingPerson,
         venue,

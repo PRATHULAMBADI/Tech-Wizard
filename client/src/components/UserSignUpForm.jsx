@@ -36,20 +36,28 @@ const UserSignUpForm = () => {
 
   const handleSignUpButtonClick = async (e) => {
     e.preventDefault();
-
-
+    setErrorMessage('')
     let isValid = true;
     if (name.trim() === '') {
       setErrorMessage('Please enter your name.');
       isValid = false;
-    } else if (!EMAIL_REGEX.test(email)) {
-      setErrorMessage('Please enter a valid email address.');
+    }else if (mobile === '') {
+      setErrorMessage('Enter a Mobile Number');
       isValid = false;
-    } else if (password.length < 8) {
-      setErrorMessage('Password must be at least 8 characters long.');
+    } else if (mobile.toString().length !== 10) {
+      setErrorMessage('10 digit Mobile Number Needed');
       isValid = false;
-    } else if (isNaN(mobile) || mobile.toString().length !== 10) {
-      setErrorMessage('Please enter a valid 10-digit mobile number.');
+    }else if (email=== '') {
+      setErrorMessage('Please enter your E-mail.');
+      isValid = false;
+     } else if (!EMAIL_REGEX.test(email)) {
+      setErrorMessage('Invalid email format.');
+      isValid = false;
+    } else if (password ==='') {
+      setErrorMessage('Enter a Password');
+      isValid = false;
+    }else if (password.length < 8) {
+      setErrorMessage('Password must be at least 8 characters.');
       isValid = false;
     }
 
@@ -84,7 +92,7 @@ const UserSignUpForm = () => {
   const handleLogInButtonClick = () => {
     navigate('/user-login');
   };
-  const handleGoToHome = () =>{
+  const handleGoToHome = () => {
     navigate('/');
   }
   return (

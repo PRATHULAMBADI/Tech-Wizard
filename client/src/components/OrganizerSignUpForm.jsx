@@ -34,18 +34,31 @@ const OrganizerSignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage('')
     let isValid = true;
     if (name.trim() === '') {
       setErrorMessage('Please enter your name.');
       isValid = false;
+    } else if (email === '') {
+      setErrorMessage('Enter an E-mail');
+      isValid = false;
     } else if (!EMAIL_REGEX.test(email)) {
-      setErrorMessage('Please enter a valid email address.');
+        setErrorMessage('Invalid E-mail format.');
+        isValid = false;
+    } else if (organization === '') {
+      setErrorMessage('Organization is required.');
       isValid = false;
-    } else if (password.length < 8) {
-      setErrorMessage('Password must be at least 8 characters long.');
+    } else if (phone === '') {
+      setErrorMessage('Enter a Mobile Number');
       isValid = false;
-    } else if (isNaN(phone) || phone.toString().length !== 10) {
-      setErrorMessage('Please enter a valid 10-digit mobile number.');
+    } else if (phone.toString().length !== 10) {
+      setErrorMessage('10 digit Mobile Number Needed');
+      isValid = false;
+    }else if (password === '') {
+      setErrorMessage('Enter a Password');
+      isValid = false;
+    }else if (password.length < 8) {
+      setErrorMessage('Password must be at least 8 characters.');
       isValid = false;
     }
 

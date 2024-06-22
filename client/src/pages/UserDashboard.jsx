@@ -201,7 +201,7 @@ const UserDashboard = () => {
                     ))}
                     </TileContainer>
                 ) : (                    
-                    <ProgramNotFound>No Upcoming Programs as per your Search</ProgramNotFound>                    
+                    <ProgramNotFound>No program registered</ProgramNotFound>                    
                 )}
             </Container>
       </BackgroundContainer>

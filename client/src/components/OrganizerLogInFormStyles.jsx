@@ -151,3 +151,20 @@ export const ErrorMessageContainer = styled.div`
   background-color: aliceblue;  
   text-align:center;
 `;
+
+//------------------------MediaQuery-------------------//
+
+const customMediaQuery = 'max-width: 768px';
+
+export const ResponsiveContainer = styled(Container)`
+  @media only screen and (${customMediaQuery}) {
+    width: 80%;
+    font-size: 18px;
+  }
+`;
+
+export const ResponsiveInput = styled(Input)`
+  @media only screen and (${customMediaQuery}) {
+    width: 80%;
+  }
+`;

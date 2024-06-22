@@ -43,7 +43,7 @@ const UserPasswordResetRequestForm = () => {
           } catch (error) {
           setWaiting(false);
           console.error('Error submitting request:', error);
-          setError(error.response.data.error || ' Enter a valid Email ');
+          setError(error.response.data.error || ' Invalid Email ');
           alert(response.data.status);
         }
         console.log('Email:',{email})

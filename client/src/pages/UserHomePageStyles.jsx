@@ -86,6 +86,7 @@ export const ButtonContainer = styled.div`
   padding: 3%;
 `;
 export const BackgroundContainer = styled.div`
+  width: 100vw;
   font-size: 134px;
   font-weight: bold;
   color: cadetblue;

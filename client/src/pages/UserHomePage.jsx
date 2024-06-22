@@ -142,7 +142,7 @@ const UserHomePage = () => {
   return (
     <BackgroundContainer>
       <Container>
-        <ContainerHeading>Welcome to User!</ContainerHeading>
+        <ContainerHeading>Welcome to User</ContainerHeading>
         <IconsContainer>            
           <IconsHolder>
             <IconsHolderStyledHomeIcon onClick={handleGoToHome}> <StyledHomeIcon  title="Go to Home"/><IconLabel >HOME</IconLabel> </IconsHolderStyledHomeIcon>

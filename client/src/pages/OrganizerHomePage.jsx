@@ -127,7 +127,7 @@ const OrganizerHomePage = () => {
   return (
     <BackgroundContainer>
       <Container>
-        <ContainerHeading>Welcome to Organizer!</ContainerHeading>
+        <ContainerHeading>Welcome to Organizer</ContainerHeading>
         <IconsContainer>
           <IconsHolder>
             <IconsHolderStyledHomeIcon onClick={handleGoToHome}>
@@ -207,7 +207,7 @@ const OrganizerHomePage = () => {
               ))}
             </TileContainer>
           ) : (
-            <ProgramNotFound>No Upcoming Programs</ProgramNotFound>
+            <ProgramNotFound>No Programs created</ProgramNotFound>
           )}
         </div>
       </Container>

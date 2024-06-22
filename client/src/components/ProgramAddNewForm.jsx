@@ -45,7 +45,7 @@ const ProgramAddNewForm = () => {
       return;
     }
     if (!name ) {
-      setErrorMessage('Please fill all required fields');
+      setErrorMessage('Name is requnired');
       return;
     }
     if(!conductingPerson) {
@@ -53,19 +53,19 @@ const ProgramAddNewForm = () => {
       return;
     }
     if(!venue) {
-      setErrorMessage('Please Enter a Conducting Person Name');
+      setErrorMessage('Venue is required');
       return;
     }
     if(!date) {
-      setErrorMessage('Please Enter a Date of the Class');
+      setErrorMessage('Date is required');
       return;
     }
     if(!time) {
-      setErrorMessage('Please Enter a Time of the Class');
+      setErrorMessage('Time is required');
       return;
     }
     if(!duration) {
-      setErrorMessage('Please Enter a Duration of the class');
+      setErrorMessage('Duration is required');
       return;
     }
 

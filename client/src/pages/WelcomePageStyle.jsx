@@ -56,78 +56,74 @@ ${IconsHolderStyle}
 export const StyledArrowCircleLeftOutlinedIcon = styled(
 ArrowCircleLeftOutlinedIcon
 )`
-color: cadetblue;
-font-size: 2rem;
-&:hover {
-    color: powderblue;
-}
+  color: cadetblue;
+  font-size: 2rem;
+  &:hover {
+      color: powderblue;
+  }
 `;
 
 export const StyledArrowCircleRightOutlinedIcon = styled(
 ArrowCircleRightOutlinedIcon
 )`
-color: cadetblue;
-font-size: 2rem;
-&:hover {
-    color: powderblue;
-}
+  color: cadetblue;
+  font-size: 2rem;
+  &:hover {
+      color: powderblue;
+  }
 `;
 
 export const BackgroundContainer = styled.div`
-// width: 100vw;
-// height: fit-content;
-// align-content: center;  
-
-font-size: 134px;
-font-weight: bold;
-color: cadetblue;
-position absolute;
-
+  font-size: 134px;
+  font-weight: bold;
+  color: cadetblue;
+  position absolute;
 `;
 
 export const ButtonContainerHeading = styled.div`
-font-weight: bold;
-font-size: 10%;
+  font-weight: bold;
+  font-size: 10%;
 `;
 
 export const ButtonContainer = styled.div`
-display: flex;
-justify-content: space-evenly;
-align-items: center;
-opacity: 1;
-padding: 3%;
+  width: 100vw; 
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  opacity: 1;
+  padding: 3% 0;
 `;
 
 export const WelcomePageButton = styled.button`
 ${baseButtonStyles}
-width:10%
+  width:10% 
 `;
 
 export const WelcomePageImageContainer = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const WelcomePageImage = styled.img`
-border: none;
-border-radius: 15%;
-width: 10%;
-height: 10%;
-padding: 1%;
+  border: none;
+  border-radius: 15%;
+  width: 10%;
+  height: 10%;
+  padding: 1%;
 `;
 
 export const WelcomePageContentHeading = styled.div`
-font-size: 20%;
-text-align: center;
-color: darkgoldenrod;
-font-weight: bold;
-text-stroke: 2px white;
--webkit-text-stroke: 1.4px whitesmoke;
+  font-size: 20%;
+  text-align: center;
+  color: darkgoldenrod;
+  font-weight: bold;
+  text-stroke: 2px white;
+  -webkit-text-stroke: 1.4px whitesmoke;
 `;
 export const WelcomePageDetails = styled.div`
-font-size: 12%;
-padding: 0 14%;
-text-align: justify;
-font-weight: normal;
+  font-size: 12%;
+  padding: 0 14%;
+  text-align: justify;
+  font-weight: normal;
 `;
